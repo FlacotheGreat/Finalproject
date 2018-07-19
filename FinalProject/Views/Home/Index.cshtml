@@ -4,23 +4,32 @@
 
 
 <div align="center">
-    <h1> Insert Final Project Name </h1>
+    <h1> Stock Market Tracker </h1>
 
     <head>
-        <title>Game of Life</title>
+        <title>Login Page</title>
 
     </head>
     <body>
-
+      <div style="float: left; width: 50%">
+        <p>Login</p>
         @using (Html.BeginForm())
         {
                 <input align="right" type="text" id="userName" value="Username"/>
                 <input align="right" type="text" id="password" value="Password"/>
-                <input align="right" type="button" id="submit" value="Submit"/>
+                <input align="right" type="button" OnClick="login()" id="submitLogin" value="Submit"/>
         }
+      </div>
+      <div style="float: right; width: 50%">
+        <p>Create new Account</p>
+        @using (Html.BeginForm())
+        {
+                <input align="right" type="text" id="newUserName" value="Username"/>
+                <input align="right" type="text" id="newPassword" value="Password"/>
+                <input align="right" type="button" OnClick="createNewUser()" id="submitNewUser" value="Submit"/>
+        }
+      </div>
     </body>
-
-
 
     <script type="text/javascript" src="~/js/site.js"></script>
 </div>
