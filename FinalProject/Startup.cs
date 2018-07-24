@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebSocketManager;
+using FinalProject.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinalProject
 {
@@ -24,6 +26,12 @@ namespace FinalProject
         {
             services.AddMvc();
             services.AddWebSocketManager();
+
+            var connection = @"Server=3750.database.windows.net;Database=data;User ID=rootuser;Password=root1234!;Trusted_Connection=False;Encrypt=True;";
+            services.AddDbContext<DataContext>(options => options.UseSqlServer(connection));
+
+            services.AddDbContext<FinalProjectContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("FinalProjectContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
