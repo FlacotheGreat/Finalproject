@@ -11,24 +11,8 @@
 
     </head>
     <body>
-      <div style="float: left; width: 50%">
-        <p>Login</p>
-        @using (Html.BeginForm())
-        {
-                <input align="right" type="text" id="userName" value="Username" OnClick="this.select()"/>
-                <input align="right" type="password" id="password" value="Password" OnClick="this.select()"/>
-                <input align="right" type="button" OnClick="login()" id="submitLogin" value="Submit"/>
-        }
-      </div>
-      <div style="float: right; width: 50%">
-        <p>Create new Account</p>
-        @using (Html.BeginForm())
-        {
-                <input align="right" type="text" id="newUserName" value="Username" OnClick="this.select()"/>
-                <input align="right" type="password" id="newPassword" value="Password" OnClick="this.select()"/>
-                <input align="right" type="button" OnClick="createNewUser()" id="submitNewUser" value="Submit"/>
-        }
-      </div>
+      <input align="center" type="button" id="loginBtn" value="Login"/>
+      <input align="center" type="button" id="newUser" value="Create new user"/>
     </body>
 
     <script type="text/javascript" src="~/js/site.js"></script>

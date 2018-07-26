@@ -1,17 +1,17 @@
 # Stock market project
 
-### login and logout stuff
+### login and logout stuff -- not done
 
-### database
+### database -- almost done
 + store at least 3 stock choices with amount purchased
 + user and password stuff
 
-### connect to stock api
-### read data from stock api
+### connect to stock api -- not done
+### read data from stock api -- not done
 
 ### potentially add and remove stocks after initial choice
 
-### js graphs
+### js graphs -- not done
 + bar graph
 + pie chart
 + price over time chart
