@@ -1,5 +1,5 @@
 
-﻿//what's needed
+//what's needed
 //button control for logging in or creating a new user
 function createNewUser(){
 
@@ -59,24 +59,6 @@ window.onload = function () {
 function user() {
     this.id = "";
     this.color = "";
-}
-
-function block() {
-    this.x = "";
-    this.y = "";
-    this.alive = "";
-}
-
-
-
-function Start() {
-    startGame = true;
-    connection.invoke("startGame", connection.connectionId, JSON.stringify(startGame));
-}
-
-function Stop() {
-    startGame = false;
-    connection.invoke("stopGame", connection.connectionId, JSON.stringify(startGame));
 }
 
 window.onload = function () {

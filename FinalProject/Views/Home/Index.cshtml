@@ -15,8 +15,8 @@
         <p>Login</p>
         @using (Html.BeginForm())
         {
-                <input align="right" type="text" id="userName" value="Username"/>
-                <input align="right" type="text" id="password" value="Password"/>
+                <input align="right" type="text" id="userName" value="Username" OnClick="this.select()"/>
+                <input align="right" type="password" id="password" value="Password" OnClick="this.select()"/>
                 <input align="right" type="button" OnClick="login()" id="submitLogin" value="Submit"/>
         }
       </div>
@@ -24,8 +24,8 @@
         <p>Create new Account</p>
         @using (Html.BeginForm())
         {
-                <input align="right" type="text" id="newUserName" value="Username"/>
-                <input align="right" type="text" id="newPassword" value="Password"/>
+                <input align="right" type="text" id="newUserName" value="Username" OnClick="this.select()"/>
+                <input align="right" type="password" id="newPassword" value="Password" OnClick="this.select()"/>
                 <input align="right" type="button" OnClick="createNewUser()" id="submitNewUser" value="Submit"/>
         }
       </div>
