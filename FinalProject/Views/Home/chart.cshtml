@@ -1,23 +1,21 @@
 @{
-    ViewData["Title"] = "Chart output";
+    ViewData["Title"] = "Chart page";
 }
 
-
 <div align="center">
-    <h1> Chart: </h1>
+    <h1> Your Chart </h1>
 
     <head>
-        <title>chart output</title>
+        <title>Chart Display</title>
 
     </head>
-    <body>
 
-      <canvas id="chart" width='600px' height='600px' style='border:1px solid #000000;'>
-        Your browser does not support html5
-      </canvas>
+    <body>
+        <canvas id="displayChart" width='1000px' height='800px' style='border:1px solid #000000;'>
+            Your browser does not support html5
+        </canvas>
     </body>
 
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script type="text/javascript" src="~/js/site.js"></script>
 </div>
