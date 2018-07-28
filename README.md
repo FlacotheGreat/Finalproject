@@ -1,26 +1,38 @@
 # Stock market project
 
-### login and logout stuff -- not done
+###Overall Tasks:
++ login/logout -- not done
++ database -- almost done
++ connecting to stock api -- not done, in testing
++ user is able to select at least 3 ticker symbols -- not done
++ user is given current price of stock -- not done
++ after all selections, divide investment equally -- not done
++ user is able to see selection data in a table -- not done, in testing
++ charts are given to the user -- not done
++ charts and table are able to be adjusted to change investment -- not done
++ running history of stocks must be saved -- not done
++ chart to allow user to see investments over time, including modified investment tables -- not done
++ the whole thing needs to look clean on a phone -- not done
 
-### database -- almost done
+### login and logout stuff
+
+### database
 + store at least 3 stock choices with amount purchased
 + user and password stuff
 
-### connect to stock api -- not done
-### read data from stock api -- not done
+### connect to stock api
+### read data from stock api
 
 ### potentially add and remove stocks after initial choice
 
-### js graphs -- not done
+### js graphs
 + bar graph
 + pie chart
 + price over time chart
 + send data to graphs from db
   + or from api to c# to db from back to the c# to js
 
-### implement crappier starts for crappier people
-+ insane fees
-+ entrance exam
+### display user tables
 
 ### Some Tables
 
