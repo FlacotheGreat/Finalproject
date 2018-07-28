@@ -19,7 +19,34 @@ function displayChart(companyAndPriceList, chartChoice) {
 }
 
 //displaying purchased stocks on user page
-function createStockTblFromJson(){
+function createStockTblFromJson(jsonData, numCompanies){
+  var body = document.getElementById("tableId");
+  var stockTbl = document.createElement('table');
+  stockTbl.style.width = '100%';
+  stockTbl.setAttribute('border', '1');
+
+  parseData = JSON.parse(jsonData);
+
+  for(var i = 0; i < numCompanies; i++){
+    if(i == 0){
+      var headerRow = stockTbl.insertRow(0);
+      var companyNameCell = headerRow.insertCell(0);
+      companyNameCell.innerHTML = "Company Name";
+      var companySymbolCell = headerRow.insertCell(1);
+      companySymbolCell.innerHTML = "Symbol";
+      var priceCell = headerRow.insertCell(2);
+      priceCell.innerHTML = "Price";
+    }else{
+      var newRow = stockTbl.insertRow(1);
+      var newPriceCell = stockTbl.insertCell(0);
+      newPriceCell.innerHTML = parseData.data.quotes.USD.price;
+      var newSymbolCell = stockTbl.insertCell(0);
+      newSymbolCell.innerHTML = parseData.data.symbol;
+      var newNameCell = stockTbl.insertCell(0);
+      newNameCell.innerHTML = parseData.data.name;
+    }
+
+  }
 
 }
 
