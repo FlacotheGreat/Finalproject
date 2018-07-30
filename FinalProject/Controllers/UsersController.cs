@@ -21,7 +21,7 @@ namespace FinalProject.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Users.ToListAsync());
+            return View();
         }
 
         // GET: Users/Details/5

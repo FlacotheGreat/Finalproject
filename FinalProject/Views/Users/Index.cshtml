@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FinalProject.Models.Users>
+﻿@model FinalProject.Models.Users
 
 @{
     ViewData["Title"] = "Index";
@@ -9,56 +9,33 @@
 
 <div align="center">
     <h1> Stock Market Tracker </h1>
-
     <head>
         <title>Login Page</title>
-
     </head>
+ 
     <p>
-        <a asp-action="Create">Create New</a>
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Details">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Username" class="control-label">Username:</label>
+                        <input asp-for="Username" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Pword" class="control-label">Password:</label>
+                        <input asp-for="Pword" />
+                        <span asp-validation-for="Pword" class="text-danger"></span>
+                   </div>
+                    <div class="form-group">
+                        <input type="submit" value="Login" />
+                        <input type="button" value="Create New" onclick="location.href='@Url.Action("Create","Users")'" />
+                    </div>
+                </form>
+            </div>
+        </div>
     </p>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Username)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Pword)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Amount)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Created_At)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Username)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Pword)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Amount)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Created_At)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
 
-    </div>
+
+</div>
