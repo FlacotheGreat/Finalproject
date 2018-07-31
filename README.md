@@ -2,6 +2,10 @@
 
 ###Overall Tasks:
 + login/logout -- not done
+	Waiting on Database changes then it will be complete
+	need to complete error handling blank fields or invalid inputs
+	Create accounts same as above
+	Pages should navigate once all is complete
 + database -- almost done
 + connecting to stock api -- not done, in testing
 + user is able to select at least 3 ticker symbols -- not done
