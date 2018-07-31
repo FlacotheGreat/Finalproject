@@ -2,7 +2,7 @@
 //getting data out to give to js charts
 
 //this needs to accept preferably a list of names and quantity
-function displayChart(companyAndPriceList, chartChoice) {
+function displayChart(compData1, compData2, compData3, chartChoice) {
   //get and clear the canvas
   var c = document.getElementById("displayChart");
   var ctx = c.getContext("2d");
@@ -18,36 +18,55 @@ function displayChart(companyAndPriceList, chartChoice) {
   }
 }
 
+function requestJSONData(){
+  connection.invoke("giveJSONData", connection.connectionId);
+}
+
 //displaying purchased stocks on user page
-function createStockTblFromJson(jsonData, numCompanies){
+function createStockTblFromJson(jsonDataComp1, jsonDataComp2, jsonDataComp3){
   var body = document.getElementById("tableId");
   var stockTbl = document.createElement('table');
   stockTbl.style.width = '100%';
   stockTbl.setAttribute('border', '1');
 
-  parseData = JSON.parse(jsonData);
+  parseData1 = JSON.parse(jsonDataComp1);
+  parseData2 = JSON.parse(jsonDataComp2);
+  parseData3 = JSON.parse(jsonDataComp3);
 
-  for(var i = 0; i < numCompanies; i++){
+  var headerRow = stockTbl.insertRow(0);
+  var companyNameCell = headerRow.insertCell(0);
+  companyNameCell.innerHTML = "Company Name";
+  var companySymbolCell = headerRow.insertCell(1);
+  companySymbolCell.innerHTML = "Symbol";
+  var priceCell = headerRow.insertCell(2);
+  priceCell.innerHTML = "Price";
+  for(var i = 0; i < 3; i++){
     if(i == 0){
-      var headerRow = stockTbl.insertRow(0);
-      var companyNameCell = headerRow.insertCell(0);
-      companyNameCell.innerHTML = "Company Name";
-      var companySymbolCell = headerRow.insertCell(1);
-      companySymbolCell.innerHTML = "Symbol";
-      var priceCell = headerRow.insertCell(2);
-      priceCell.innerHTML = "Price";
+      var newRow = stockTbl.insertRow(1);
+      var newPriceCell = stockTbl.insertCell(0);
+      newPriceCell.innerHTML = parseData1.data.quotes.USD.price;
+      var newSymbolCell = stockTbl.insertCell(0);
+      newSymbolCell.innerHTML = parseData1.data.symbol;
+      var newNameCell = stockTbl.insertCell(0);
+      newNameCell.innerHTML = parseData1.data.name;
+    }else if(i == 1){
+      var newRow = stockTbl.insertRow(1);
+      var newPriceCell = stockTbl.insertCell(0);
+      newPriceCell.innerHTML = parseData2.data.quotes.USD.price;
+      var newSymbolCell = stockTbl.insertCell(0);
+      newSymbolCell.innerHTML = parseData2.data.symbol;
+      var newNameCell = stockTbl.insertCell(0);
+      newNameCell.innerHTML = parseData2.data.name;
     }else{
       var newRow = stockTbl.insertRow(1);
       var newPriceCell = stockTbl.insertCell(0);
-      newPriceCell.innerHTML = parseData.data.quotes.USD.price;
+      newPriceCell.innerHTML = parseData3.data.quotes.USD.price;
       var newSymbolCell = stockTbl.insertCell(0);
-      newSymbolCell.innerHTML = parseData.data.symbol;
+      newSymbolCell.innerHTML = parseData3.data.symbol;
       var newNameCell = stockTbl.insertCell(0);
-      newNameCell.innerHTML = parseData.data.name;
+      newNameCell.innerHTML = parseData3.data.name;
     }
-
   }
-
 }
 
 ﻿var connection;
@@ -77,6 +96,14 @@ window.onload = function () {
         users = JSON.parse(serUser);
         console.log(users);
     };
+
+    connection.clientMethods["ReceiveUserChoicesJson"] = (socketId, jsonComp1, jsonComp2, jsonComp3) => {
+      createStockTblFromJson(jsonComp1, jsonComp2, jsonComp3);
+    }
+
+    connection.clientMethods["ReceiveJSONChartData"] = (socketId, jsonComp1, jsonComp2, jsonComp3) => {
+      displayChart(jsonComp1, jsonComp2, jsonComp3, )
+    }
 
     connection.start()
 
