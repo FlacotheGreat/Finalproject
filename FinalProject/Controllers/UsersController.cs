@@ -26,21 +26,24 @@ namespace FinalProject.Controllers
 
 
         // GET: Users/Details/5
-        public async Task<IActionResult> Details(string username)
+        public async Task<IActionResult> Details(string Username, string Pword)
         {
-            if (username == null)
+            if (Username == null || Pword == null)
             {
                 return NotFound();
             }
 
             var users = await _context.Users
-                .SingleOrDefaultAsync(m => m.Username == username);
-            //Console.WriteLine(m.id);
+                .SingleOrDefaultAsync(m => m.Username == Username);
+            Console.WriteLine("User ID: "+users.Id);
             if (users == null)
             {
-                return NotFound();
+                    return NotFound();
             }
-
+            else if (users.Pword != Pword)
+            {
+                return Content("Invalid password");
+            }
             return View(users);
         }
 
