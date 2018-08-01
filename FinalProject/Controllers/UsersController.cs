@@ -53,7 +53,7 @@ namespace FinalProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Username,Pword,Amount,Created_At")] Users users)
+        public async Task<IActionResult> Create([Bind("Username,Pword,Amount")] Users users)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace FinalProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Username,Pword,Amount,Created_At")] Users users)
+        public async Task<IActionResult> Edit(int id, [Bind("Username,Pword,Amount")] Users users)
         {
             if (id != users.Id)
             {

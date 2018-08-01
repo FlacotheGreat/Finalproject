@@ -56,7 +56,7 @@ namespace FinalProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UsersId,Company_Name,Purchased_Amount,Created_At")] StockPurchaseEntry stockPurchaseEntry)
+        public async Task<IActionResult> Create([Bind("UsersId,Company_Name,Purchased_Amount")] StockPurchaseEntry stockPurchaseEntry)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace FinalProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UsersId,Company_Name,Purchased_Amount,Created_At")] StockPurchaseEntry stockPurchaseEntry)
+        public async Task<IActionResult> Edit(int id, [Bind("UsersId,Company_Name,Purchased_Amount")] StockPurchaseEntry stockPurchaseEntry)
         {
             if (id != stockPurchaseEntry.Id)
             {
