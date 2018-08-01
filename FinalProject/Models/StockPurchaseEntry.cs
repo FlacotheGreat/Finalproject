@@ -11,12 +11,10 @@ namespace FinalProject.Models
         public int UsersId { get; set; }
         public string Company_Name { get; set; }
         public decimal Purchased_Amount { get; set; }
-<<<<<<< Updated upstream
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-=======
-        private DateTime _returnDate = DateTime.MinValue;
+       private DateTime _returnDate = DateTime.MinValue;
 
->>>>>>> Stashed changes
+
         public DateTime Created_At { get; set; }
 
         public Users Users { get; set; }

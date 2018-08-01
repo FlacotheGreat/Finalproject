@@ -27,6 +27,7 @@ namespace FinalProject
             // jsonComp3 =
             //pass that data back to client
             //await InvokeClientMethodToAllAsync("ReceiveJSONChartData", jsonComp1, jsonComp2, jsonComp3);
+
         }
     }
 }

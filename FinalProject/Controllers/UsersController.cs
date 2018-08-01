@@ -26,15 +26,16 @@ namespace FinalProject.Controllers
 
 
         // GET: Users/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string username)
         {
-            if (id == null)
+            if (username == null)
             {
                 return NotFound();
             }
 
             var users = await _context.Users
-                .SingleOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.Username == username);
+            //Console.WriteLine(m.id);
             if (users == null)
             {
                 return NotFound();
