@@ -17,12 +17,6 @@
             @Html.DisplayFor(model => model.Username)
         </dd>
         <dt>
-            Password:
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Pword)
-        </dd>
-        <dt>
             Initial balance:
         </dt>
         <dd>
@@ -37,6 +31,54 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                Stock 1:
+            </dt>
+            <dd>
+                Will display value here
+            </dd>
+            <dd><input type="text" value="Change stock value?" /> </dd>
+            <dt>
+                stock 2:
+            </dt>
+            <dd>
+                Will display value here
+            </dd>
+            <dd><input type="text" value="Change stock value?" /> </dd>
+            <dt>
+                stock 3:
+            </dt>
+            <dd>
+                Will display value here
+            </dd>
+            <dd><input type="text" value="Change stock value?" /> </dd>
+        </dl>
+    </div>
+
+
+    <div align="center">
+        <h1> Your Chart </h1>
+
+        <head>
+            <title>Chart Display</title>
+
+        </head>
+
+        <body>
+            <canvas id="displayChart" width='1000px' height='800px' style='border:1px solid #000000;'>
+                Your browser does not support html5
+            </canvas>
+            <input align="left" type="button" id="pieChart" value="PIE" />
+            <input align="center" type="button" id="barChart" value="BAR" />
+            <input align="right" type="button" id="lineChart" value="LINE" />
+        </body>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+        <script type="text/javascript" src="~/js/site.js"></script>
+    </div>
+
+    <a asp-action="Index">Logout</a>
 </div>
