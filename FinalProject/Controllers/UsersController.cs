@@ -30,7 +30,9 @@ namespace FinalProject.Controllers
         {
             if (Username == null || Pword == null)
             {
-                return Content("Text fields can not be blank");
+                return Content("Text fields can not be blank and honestly if you made it this far bravo \n" +
+                    "Here are some cookies for you" +
+                    " https://www.reddit.com/r/food/comments/7prr42/prochef_chocolate_chip_cookies/");
             }
 
             var users = await _context.Users
