@@ -1,7 +1,7 @@
 # Stock market project
 
 ### Overall Tasks:
-+ login/logout -- not done
++ login/logout -- done
 	Waiting on Database changes then it will be complete
 	Password needs to be hashed (Client or Server need to verify first)
 	need to complete error handling blank fields or invalid inputs

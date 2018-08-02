@@ -29,43 +29,25 @@ function createStockTblFromJson(jsonDataComp1, jsonDataComp2, jsonDataComp3){
   stockTbl.style.width = '100%';
   stockTbl.setAttribute('border', '1');
 
+  //parse incoming json
   parseData1 = JSON.parse(jsonDataComp1);
   parseData2 = JSON.parse(jsonDataComp2);
   parseData3 = JSON.parse(jsonDataComp3);
 
-  var headerRow = stockTbl.insertRow(0);
-  var companyNameCell = headerRow.insertCell(0);
-  companyNameCell.innerHTML = "Company Name";
-  var companySymbolCell = headerRow.insertCell(1);
-  companySymbolCell.innerHTML = "Symbol";
-  var priceCell = headerRow.insertCell(2);
-  priceCell.innerHTML = "Price";
-  for(var i = 0; i < 3; i++){
-    if(i == 0){
-      var newRow = stockTbl.insertRow(1);
-      var newPriceCell = stockTbl.insertCell(0);
-      newPriceCell.innerHTML = parseData1.data.quotes.USD.price;
-      var newSymbolCell = stockTbl.insertCell(0);
-      newSymbolCell.innerHTML = parseData1.data.symbol;
-      var newNameCell = stockTbl.insertCell(0);
-      newNameCell.innerHTML = parseData1.data.name;
-    }else if(i == 1){
-      var newRow = stockTbl.insertRow(1);
-      var newPriceCell = stockTbl.insertCell(0);
-      newPriceCell.innerHTML = parseData2.data.quotes.USD.price;
-      var newSymbolCell = stockTbl.insertCell(0);
-      newSymbolCell.innerHTML = parseData2.data.symbol;
-      var newNameCell = stockTbl.insertCell(0);
-      newNameCell.innerHTML = parseData2.data.name;
-    }else{
-      var newRow = stockTbl.insertRow(1);
-      var newPriceCell = stockTbl.insertCell(0);
-      newPriceCell.innerHTML = parseData3.data.quotes.USD.price;
-      var newSymbolCell = stockTbl.insertCell(0);
-      newSymbolCell.innerHTML = parseData3.data.symbol;
-      var newNameCell = stockTbl.insertCell(0);
-      newNameCell.innerHTML = parseData3.data.name;
-    }
+  //company 1
+  CompCurPrice1.innerHTML = parseData1.data.quotes.USD.price;
+  CompSymbol1.innerHTML = parseData1.data.symbol;
+  CompName1.innerHTML = parseData1.data.name;
+
+  //company 2
+  CompCurPrice2.innerHTML = parseData2.data.quotes.USD.price;
+  CompSymbol2.innerHTML = parseData2.data.symbol;
+  CompName2.innerHTML = parseData2.data.name;
+
+  //company 3
+  CompCurPrice3.innerHTML = parseData3.data.quotes.USD.price;
+  CompSymbol3.innerHTML = parseData3.data.symbol;
+  CompName3.innerHTML = parseData3.data.name;
   }
 }
 
