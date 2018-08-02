@@ -57,3 +57,4 @@
 | varchar            | companyName          |
 | int                | stockAmountPurchased |
 | date               | purchaseDate         |
+| money 						 | purchaseCost					|
