@@ -30,7 +30,7 @@ namespace FinalProject.Controllers
         {
             if (Username == null || Pword == null)
             {
-                return NotFound();
+                return Content("Text fields can not be blank");
             }
 
             var users = await _context.Users
