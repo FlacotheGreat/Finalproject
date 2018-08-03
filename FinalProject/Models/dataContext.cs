@@ -31,7 +31,7 @@ namespace FinalProject.Models
         {
             modelBuilder.Entity<StockPurchaseEntry>(entity =>
             {
-                entity.ToTable("stock_purchase_entry");
+                entity.ToTable("StockPurchaseEntry");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")

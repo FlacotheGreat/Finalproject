@@ -5,7 +5,7 @@ namespace FinalProject
 {
     public class HttpHandler
     {
-        static async void GetData(string uri)
+        internal static async void GetData(string uri)
         {
             // From this vid https://www.youtube.com/watch?v=XAHF8TzFmJI
             using (HttpClient client = new HttpClient())

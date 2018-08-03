@@ -11,10 +11,9 @@ namespace FinalProject.Models
         public int UsersId { get; set; }
         public string Company_Name { get; set; }
         public decimal Purchased_Amount { get; set; }
+        [Column(TypeName = "money")]
+        public decimal Amount_Paid { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-       private DateTime _returnDate = DateTime.MinValue;
-
-
         public DateTime Created_At { get; set; }
 
         public Users Users { get; set; }

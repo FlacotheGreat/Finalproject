@@ -19,6 +19,11 @@ namespace FinalProject
             //await InvokeClientMethodToAllAsync("ReceiveUserChoicesJson", jsonComp1, jsonComp2, jsonComp3);
         }
 
+        public async void ReturnJSONData(string data) {
+            // This will just be called three times. Hope it will be easy to just display what gets returned regardless of how many are requested?
+            await InvokeClientMethodToAllAsync("ReceiveUserChoicesJson", data);
+        }
+
         //this function should give what's needed for a chart
         public async Task giveChartData(string socketId){
             //obtain user json data
