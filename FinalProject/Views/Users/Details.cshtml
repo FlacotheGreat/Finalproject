@@ -1,4 +1,5 @@
-﻿@model FinalProject.Models.Users
+﻿
+@model dynamic
 
 @{
     ViewData["Title"] = "Details";
@@ -16,19 +17,19 @@
                     Username:
                 </dt>
                 <dd>
-                    @Html.DisplayFor(model => model.Username)
+                    @Html.DisplayFor(model => User)
                 </dd>
                 <dt align="left">
                     Initial balance:
                 </dt>
                 <dd>
-                    @Html.DisplayFor(model => model.Amount)
+                    @Html.DisplayFor(model => @User)
                 </dd>
                 <dt align="left">
                     Member since:
                 </dt>
                 <dd>
-                    @Html.DisplayFor(model => model.Created_At)
+                    @Html.DisplayFor(model => @User)
                 </dd>
             </dl>
         </legend>

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalProject.Models;
+using System.Dynamic;
 
 namespace FinalProject.Controllers
 {
@@ -28,6 +29,12 @@ namespace FinalProject.Controllers
         // GET: Users/Details/5
         public async Task<IActionResult> Details(string Username, string Pword)
         {
+
+            dynamic mymodel = new ExpandoObject();
+
+
+
+
             if (Username == null || Pword == null)
             {
                 return Content("Text fields can not be blank and honestly if you made it this far bravo \n" +
@@ -46,7 +53,15 @@ namespace FinalProject.Controllers
             {
                 return Content("Invalid password");
             }
-            return View(users);
+
+
+            mymodel.User = users.Username;
+            mymodel.Balance = users.Amount;
+            //mymodel.Stock1 = getUserStock(1);
+            //mymodel.Stock2 = getUserStock(2);
+            //mymodel.Stock3 = getUserStock(3);
+
+            return View(mymodel);
         }
 
         // GET: Users/Create
@@ -154,6 +169,12 @@ namespace FinalProject.Controllers
         private bool UsersExists(int id)
         {
             return _context.Users.Any(e => e.Id == id);
+        }
+
+        private string getUserStock(string uName)
+        {
+
+            return null;
         }
     }
 }
