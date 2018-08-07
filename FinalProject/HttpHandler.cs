@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace FinalProject
 {
     public class HttpHandler
     {
-        internal static async void GetData(string uri)
+        internal static async Task<string> GetData(string uri)
         {
             // From this vid https://www.youtube.com/watch?v=XAHF8TzFmJI
             using (HttpClient client = new HttpClient())
@@ -16,8 +17,10 @@ namespace FinalProject
 
                 if (data != null)
                 {
-                    Console.WriteLine(data);
+                    return data;
                 }
+
+                return "";
             }
         }
     }

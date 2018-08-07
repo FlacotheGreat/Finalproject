@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using WebSocketManager;
 
 namespace FinalProject
@@ -8,31 +9,75 @@ namespace FinalProject
         public InfoHandler(WebSocketConnectionManager webSocketConnectionManager) : base(webSocketConnectionManager)
         {
         }
-
-        //basically this one should give what's needed for the table
-        public async Task giveJSONData(string socketId){
-            //obtain user json data
-            // jsonComp1 =
-            // jsonComp2 =
-            // jsonComp3 =
-            //pass that data back to client
-            //await InvokeClientMethodToAllAsync("ReceiveUserChoicesJson", jsonComp1, jsonComp2, jsonComp3);
+        
+        // Coin API: https://min-api.cryptocompare.com/
+        // Get list of currencies
+        //{
+        //    "Response": "Success",
+        //    "Message": "Coin list succesfully returned!",
+        //    "Data": {
+        //        "42": {
+        //            "Id": "4321",
+        //            "Url": "/coins/42/overview",
+        //            "ImageUrl": "/media/12318415/42.png",
+        //            "Name": "42",
+        //            "Symbol": "42",
+        //            "CoinName": "42 Coin",
+        //            "FullName": "42 Coin (42)",
+        //            "Algorithm": "Scrypt",
+        //            "ProofType": "PoW/PoS",
+        //            "FullyPremined": "0",
+        //            "TotalCoinSupply": "42",
+        //            "BuiltOn": "N/A",
+        //            "SmartContractAddress": "N/A",
+        //            "PreMinedValue": "N/A",
+        //            "TotalCoinsFreeFloat": "N/A",
+        //            "SortOrder": "34",
+        //            "Sponsored": false,
+        //            "IsTrading": true
+        //        }
+        //    }
+        //}
+        public async Task getCoinList(string socketId)
+        {
+            var uri = "https://min-api.cryptocompare.com/data/all/coinlist";
+            await getData(socketId, uri, "ReceiveCoinListJson");
         }
 
-        public async void ReturnJSONData(string data) {
-            // This will just be called three times. Hope it will be easy to just display what gets returned regardless of how many are requested?
-            await InvokeClientMethodToAllAsync("ReceiveUserChoicesJson", data);
+        // Price of specific currencies
+        // https://min-api.cryptocompare.com/data/pricemulti?fsyms=42&tsyms=USD
+        // {
+        //    "42": {
+        //        "USD": 17414.93
+        //    }
+        //}
+        public async Task getPrices(string socketId, string[] coins)
+        {
+            var coinString = string.Join(',', coins);
+            var uri = $"https://min-api.cryptocompare.com/data/pricemulti?fsyms={coinString}&tsyms=USD";
+            await getData(socketId, uri, "ReceiveCoinPricesJson");
         }
 
-        //this function should give what's needed for a chart
-        public async Task giveChartData(string socketId){
-            //obtain user json data
-            // jsonComp1 =
-            // jsonComp2 =
-            // jsonComp3 =
-            //pass that data back to client
-            //await InvokeClientMethodToAllAsync("ReceiveJSONChartData", jsonComp1, jsonComp2, jsonComp3);
+        // Historical price for a coin
+        // https://min-api.cryptocompare.com/data/pricehistorical?fsym=42&tsyms=USD&ts=1533619818
+        // {
+        //    "42": {
+        //        "USD": 17531.56
+        //    }
+        //}
+        public async void getHistoricalPrices(string socketId, string coin, DateTime dateTime)
+        {
+            var unixTimestamp = (Int32)(DateTime.UtcNow.Subtract(dateTime)).TotalSeconds;
+            var uri = $"https://min-api.cryptocompare.com/data/pricehistorical?fsym={coin}&tsyms=USD&ts={unixTimestamp}";
+            await getData(socketId, uri, "ReceiveCoinHistoricalPricesJson");
+        }
 
+        // Send request
+        public async Task getData(string socketId, string uri, string method)
+        {
+            object[] data = new object[1];
+            data[1] = await HttpHandler.GetData(uri);
+            await InvokeClientMethodAsync(socketId, method, data);
         }
     }
 }

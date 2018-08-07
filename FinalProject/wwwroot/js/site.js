@@ -38,6 +38,10 @@ function requestJSONData(){
   connection.invoke("giveJSONData", connection.connectionId);
 }
 
+function requestCoinListData() {
+    connection.invoke("getCoinList", connection.connectionId);
+}
+
 //displaying purchased stocks on user page
 function createStockTblFromJson(jsonDataComp1, jsonDataComp2, jsonDataComp3){
   //parse incoming json
