@@ -61,7 +61,7 @@ namespace FinalProject.Controllers
             //mymodel.Stock2 = getUserStock(2);
             //mymodel.Stock3 = getUserStock(3);
 
-            return View(mymodel);
+            return View(users);
         }
 
         // GET: Users/Create
