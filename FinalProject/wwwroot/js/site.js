@@ -14,7 +14,23 @@ function displayChart(compData1, compData2, compData3, chartChoice) {
   }else if(chartChoice = "pie"){
 
   }else if(chartChoice = "line"){
+    var chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [], //these need to be filled in, pulled in from each day or something since purchase
+      datasets: [{
+        label: "Company Line Chart",
+        backgroundColor: 'rgb(0, 122, 122)',
+        borderColor: 'rgb(0, 0, 0)',
+        data: [] // currency value at each label
+      }]
+    },
 
+    options: {
+      responsive: false,
+      // maintainAspectRatio: true
+    }
+    });
   }
 }
 

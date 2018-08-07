@@ -4,86 +4,89 @@
 @{
     ViewData["Title"] = "Details";
 }
-
-<h2>Details</h2>
-
-<div>
-    <hr />
-    <fieldset>
-        <legend>
-            User details:
-            <dl class="dl-horizontal" align="left">
-                <dt align="left">
-                    Username:
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => User)
-                </dd>
-                <dt align="left">
-                    Initial balance:
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => @User)
-                </dd>
-                <dt align="left">
-                    Member since:
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => @User)
-                </dd>
-            </dl>
-        </legend>
-    </fieldset>
-</div>
-<div>
-
-    <div>
-        <dl class="dl-horizontal">
-            <dt>
-                Stock 1:
-            </dt>
-            <dd>
-                Will display value here
-            </dd>
-            <dd><input type="text" value="Change stock value?" /> </dd>
-            <dt>
-                stock 2:
-            </dt>
-            <dd>
-                Will display value here
-            </dd>
-            <dd><input type="text" value="Change stock value?" /> </dd>
-            <dt>
-                stock 3:
-            </dt>
-            <dd>
-                Will display value here
-            </dd>
-            <dd><input type="text" value="Change stock value?" /> </dd>
-        </dl>
-    </div>
+<div align="center">
 
 
-    <div align="center">
+    <head>
+        <title>Chart Display</title>
+
+    </head>
+
+    <body>
+        <h2>Details</h2>
+        <div>
+            <hr />
+            <fieldset>
+                <legend>
+                    User details:
+                    <dl class="dl-horizontal" align="left">
+                        <dt align="left">
+                            Username:
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => User)
+                        </dd>
+                        <dt align="left">
+                            Initial balance:
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => @User)
+                        </dd>
+                        <dt align="left">
+                            Member since:
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => @User)
+                        </dd>
+                    </dl>
+                </legend>
+            </fieldset>
+        </div>
+        <table border="1px solid black";>
+          <tr>
+            <th>Company Name</th>
+            <th>Symbol</th>
+            <th>Current Price</th>
+            <th>Amount Invested</th>
+            <th>Earnings</th>
+            <th>Current Shares (this can be adjusted)</th>
+          </tr>
+          <tr>
+            <td id=CompName1></td>
+            <td id=CompSymbol1></td>
+            <td id=CompCurPrice1></td>
+            <td id=UserInvestment1></td>
+            <td id=UserEarnings1></td>
+            <td><input type="text" id=CompCurrShares1></td>
+          </tr>
+          <tr>
+            <td id=CompName2></td>
+            <td id=CompSymbol2></td>
+            <td id=CompCurPrice2></td>
+            <td id=UserInvestment2></td>
+            <td id=UserEarnings2></td>
+            <td><input type="text" id=CompCurrShares2></td>
+          </tr>
+          <tr>
+            <td id=CompName3></td>
+            <td id=CompSymbol3></td>
+            <td id=CompCurPrice3></td>
+            <td id=UserInvestment3></td>
+            <td id=UserEarnings3></td>
+            <td><input type="text" id=CompCurrShares3></td>
+          </tr>
+        </table>
         <h1> Your Chart </h1>
+        <canvas id="displayChart" width='1000px' height='800px' style='border:1px solid #000000;'>
+            Your browser does not support html5
+        </canvas>
+        <input align="left" type="button" id="pieChart" value="PIE" />
+        <input align="center" type="button" id="barChart" value="BAR" />
+        <input align="right" type="button" id="lineChart" value="LINE" />
+    </body>
 
-        <head>
-            <title>Chart Display</title>
-
-        </head>
-
-        <body>
-            <canvas id="displayChart" width='1000px' height='800px' style='border:1px solid #000000;'>
-                Your browser does not support html5
-            </canvas>
-            <input align="left" type="button" id="pieChart" value="PIE" />
-            <input align="center" type="button" id="barChart" value="BAR" />
-            <input align="right" type="button" id="lineChart" value="LINE" />
-        </body>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-        <script type="text/javascript" src="~/js/site.js"></script>
-    </div>
-
-    <a asp-action="Index">Logout</a>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script type="text/javascript" src="~/js/site.js"></script>
 </div>
+
+<a asp-action="Index">Logout</a>
