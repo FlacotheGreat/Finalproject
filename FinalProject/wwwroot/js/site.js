@@ -24,11 +24,6 @@ function requestJSONData(){
 
 //displaying purchased stocks on user page
 function createStockTblFromJson(jsonDataComp1, jsonDataComp2, jsonDataComp3){
-  var body = document.getElementById("tableId");
-  var stockTbl = document.createElement('table');
-  stockTbl.style.width = '100%';
-  stockTbl.setAttribute('border', '1');
-
   //parse incoming json
   parseData1 = JSON.parse(jsonDataComp1);
   parseData2 = JSON.parse(jsonDataComp2);
@@ -48,7 +43,6 @@ function createStockTblFromJson(jsonDataComp1, jsonDataComp2, jsonDataComp3){
   CompCurPrice3.innerHTML = parseData3.data.quotes.USD.price;
   CompSymbol3.innerHTML = parseData3.data.symbol;
   CompName3.innerHTML = parseData3.data.name;
-  }
 }
 
 ﻿var connection;
