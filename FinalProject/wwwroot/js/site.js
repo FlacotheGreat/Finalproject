@@ -3,6 +3,12 @@
 
 //this needs to accept preferably a list of names and quantity
 function displayChart(compData1, compData2, compData3, chartChoice) {
+  //parse the JSON data
+  parseData1 = JSON.parse(compData1);
+  parseData2 = JSON.parse(compData2);
+  parseData3 = JSON.parse(compData3);
+  var currencyNames = [parseData1.data.name, parseData2.data.name, parseData3.data.name];
+
   //get and clear the canvas
   var c = document.getElementById("displayChart");
   var ctx = c.getContext("2d");
@@ -10,17 +16,77 @@ function displayChart(compData1, compData2, compData3, chartChoice) {
   //read list
   //give it to the chart
   if(chartChoice = "bar"){
+    var chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: [], //these need to be filled in, pulled in from each day or something since purchase
+      datasets: [{
+        label: currencyNames[0], //this should be the name of the first company
+        backgroundColor: 'rgb(0, 0, 255)',
+        borderColor: 'rgb(0, 0, 0)',
+        data: [] // currency value at each label
+      },
+      {
+        label: currencyNames[1], //this should be the name of the second company
+        backgroundColor: 'rgb(0, 255, 0)',
+        borderColor: 'rgb(0, 0, 0)',
+        data: [] // currency value at each label
+      },
+      {
+        label: currencyNames[2], //this should be the name of the third company
+        backgroundColor: 'rgb(255, 0, 0)',
+        borderColor: 'rgb(0, 0, 0)',
+        data: [] // currency value at each label
+      }]
+    },
 
+    options: {
+      responsive: false,
+      // maintainAspectRatio: true
+    }
+    });
   }else if(chartChoice = "pie"){
+    var chart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: currencyNames, //this needs to be the names of the currency
+      datasets: [{
+        label: "User Pie Chart",
+        backgroundColor: [
+          window.chartColors.red,
+					window.chartColors.blue,
+					window.chartColors.yellow,
+        ],
+        borderColor: 'rgb(0, 0, 0)',
+        data: [parseData1.data.quotes.USD.price, parseData2.data.quotes.USD.price, parseData3.data.quotes.USD.price] // current value of each currency
+      }]
+    },
 
+    options: {
+      responsive: false,
+      // maintainAspectRatio: true
+    }
+    });
   }else if(chartChoice = "line"){
     var chart = new Chart(ctx, {
     type: 'line',
     data: {
       labels: [], //these need to be filled in, pulled in from each day or something since purchase
       datasets: [{
-        label: "Company Line Chart",
-        backgroundColor: 'rgb(0, 122, 122)',
+        label: currencyNames[0], //this should be the name of the first company
+        backgroundColor: 'rgb(0, 0, 255)',
+        borderColor: 'rgb(0, 0, 0)',
+        data: [] // currency value at each label
+      },
+      {
+        label: currencyNames[1], //this should be the name of the second company
+        backgroundColor: 'rgb(0, 255, 0)',
+        borderColor: 'rgb(0, 0, 0)',
+        data: [] // currency value at each label
+      },
+      {
+        label: currencyNames[2], //this should be the name of the third company
+        backgroundColor: 'rgb(255, 0, 0)',
         borderColor: 'rgb(0, 0, 0)',
         data: [] // currency value at each label
       }]
