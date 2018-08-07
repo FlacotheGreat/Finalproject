@@ -9,7 +9,7 @@ namespace FinalProject
         public InfoHandler(WebSocketConnectionManager webSocketConnectionManager) : base(webSocketConnectionManager)
         {
         }
-        
+
         // Coin API: https://min-api.cryptocompare.com/
         // Get list of currencies
         //{
@@ -78,6 +78,25 @@ namespace FinalProject
             object[] data = new object[1];
             data[1] = await HttpHandler.GetData(uri);
             await InvokeClientMethodAsync(socketId, method, data);
+        }
+
+        //this function should give what's needed for a chart
+        public async Task giveChartData(string socketId){
+            //obtain user json data
+            // jsonComp1 =
+            // jsonComp2 =
+            // jsonComp3 =
+            //pass that data back to client
+            //await InvokeClientMethodToAllAsync("ReceiveJSONChartData", jsonComp1, jsonComp2, jsonComp3);
+        }
+
+        public async Task giveJSONData(string socketId){
+            //obtain user json data
+            // jsonComp1 =
+            // jsonComp2 =
+            // jsonComp3 =
+            //pass that data back to client
+            //await InvokeClientMethodToAllAsync("ReceiveUserChoicesJson", jsonComp1, jsonComp2, jsonComp3);
         }
     }
 }
