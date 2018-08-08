@@ -32,7 +32,7 @@ namespace FinalProject.Controllers
 
             dynamic mymodel = new ExpandoObject();
 
-
+            Console.WriteLine(ApiDataCalls.getCoinList());
 
 
             if (Username == null || Pword == null)

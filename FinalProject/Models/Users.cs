@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
+
 namespace FinalProject.Models
 {
+
+
     public partial class Users
     {
         public Users()
@@ -19,6 +22,28 @@ namespace FinalProject.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime Created_At { get; set; }
 
-        public ICollection<StockPurchaseEntry> StockPurchaseEntry { get; set; }
+        public ICollection<StockPurchaseEntry> StockPurchaseEntry
+        {
+            get; set;
+
+        }
+
+        public class Stocks
+        {
+            public int Id { get; set; }
+            public string name { get; set; }
+
+        }
+
+        public List<Stocks> getStocks()
+        {
+            //InfoHandler stock = new InfoHandler();
+
+            List<Stocks> stocks = new List<Stocks>();
+
+            return stocks;
+
+        }
+
     }
 }
