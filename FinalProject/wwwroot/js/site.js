@@ -116,19 +116,19 @@ function createStockTblFromJson(jsonDataComp1, jsonDataComp2, jsonDataComp3){
   parseData3 = JSON.parse(jsonDataComp3);
 
   //company 1
-  CompCurPrice1.innerHTML = parseData1.data.quotes.USD.price;
-  CompSymbol1.innerHTML = parseData1.data.symbol;
-  CompName1.innerHTML = parseData1.data.name;
+  document.getElementById("CompCurPrice1").innerHTML = parseData1.data.quotes.USD.price;
+  document.getElementById("CompSymbol1").innerHTML = parseData1.data.symbol;
+  document.getElementById("CompName1").innerHTML = parseData1.data.name;
 
   //company 2
-  CompCurPrice2.innerHTML = parseData2.data.quotes.USD.price;
-  CompSymbol2.innerHTML = parseData2.data.symbol;
-  CompName2.innerHTML = parseData2.data.name;
+  document.getElementById("CompCurPrice2").innerHTML = parseData2.data.quotes.USD.price;
+  document.getElementById("CompSymbol2").innerHTML = parseData2.data.symbol;
+  document.getElementById("CompName2").innerHTML = parseData2.data.name;
 
   //company 3
-  CompCurPrice3.innerHTML = parseData3.data.quotes.USD.price;
-  CompSymbol3.innerHTML = parseData3.data.symbol;
-  CompName3.innerHTML = parseData3.data.name;
+  document.getElementById("CompCurPrice3").innerHTML = parseData3.data.quotes.USD.price;
+  document.getElementById("CompSymbol3").innerHTML = parseData3.data.symbol;
+  document.getElementById("CompName3").innerHTML = parseData3.data.name;
 }
 
 ﻿var connection;
@@ -158,6 +158,15 @@ window.onload = function () {
         users = JSON.parse(serUser);
         console.log(users);
     };
+
+    connection.clientMethods["ParseAndReturnJson"] = (socketId, jsonStr) => {
+      //parse the JSON object
+      parseData = JSON.parse(jsonStr);
+      //get whatever we want out of JSON
+
+      //send it back to the server
+      connection.invoke("parsedDataFromJS", connection.connectionId); //add whatever variables we want
+    }
 
     connection.clientMethods["ReceiveUserChoicesJson"] = (socketId, jsonComp1, jsonComp2, jsonComp3) => {
       createStockTblFromJson(jsonComp1, jsonComp2, jsonComp3);

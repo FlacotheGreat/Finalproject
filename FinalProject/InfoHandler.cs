@@ -98,5 +98,9 @@ namespace FinalProject
             //pass that data back to client
             //await InvokeClientMethodToAllAsync("ReceiveUserChoicesJson", jsonComp1, jsonComp2, jsonComp3);
         }
+
+        public async Task parsedDataFromJS(string socketId){ //add additional parameters
+          //put received variables wherever you want them
+        }
     }
 }
