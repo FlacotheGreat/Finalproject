@@ -77,14 +77,16 @@
         <canvas id="displayChart" width='1000px' height='800px' style='border:1px solid #000000;'>
             Your browser does not support html5
         </canvas>
-        <input align="left" type="button" id="pieChart" value="PIE" />
-        <input align="center" type="button" id="barChart" value="BAR" />
-        <input align="right" type="button" id="lineChart" value="LINE" />
+        <p></p>
+        <div align="center">
+          <input align="center" type="button" id="pieChart" value="PIE" />
+          <input align="center" type="button" id="barChart" value="BAR" />
+          <input align="center" type="button" id="lineChart" value="LINE" />
+          <p></p>
+          <a asp-action="Index">Logout</a>
+        </div>
     </body>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script src="https://raw.githubusercontent.com/jamesalvarez/draggable-piechart/master/draggable-piechart.js"></script>
     <script type="text/javascript" src="~/js/site.js"></script>
-
-
-<a asp-action="Index">Logout</a>
