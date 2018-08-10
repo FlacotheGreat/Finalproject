@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Net;
 using Newtonsoft.Json.Linq;
+using FinalProject.Models;
 
 namespace FinalProject
 {
@@ -41,14 +42,7 @@ namespace FinalProject
         //        }
         //    }
         //}
-        public static object getCoinList()
-        {
-            //JObject jobject = JObject.parse(
-            String coinInfo = client.DownloadString("https://min-api.cryptocompare.com/data/all/coinlist");
-            Console.WriteLine(coinInfo);
 
-           return coinInfo; 
-        }
 
         // Price of specific currencies
         // https://min-api.cryptocompare.com/data/pricemulti?fsyms=42&tsyms=USD

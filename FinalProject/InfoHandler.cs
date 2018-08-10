@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using WebSocketManager;
 
@@ -51,11 +52,24 @@ namespace FinalProject
         //        "USD": 17414.93
         //    }
         //}
+
+        //Create String array of User coins to pass into GetPrices
         public async Task getPrices(string socketId, string[] coins)
         {
+            WebClient client = new WebClient();
+
+            //Creates "BTC,42,BTH"
             var coinString = string.Join(',', coins);
+
+            //Appends Coinstring into uri
             var uri = $"https://min-api.cryptocompare.com/data/pricemulti?fsyms={coinString}&tsyms=USD";
-            await getData(socketId, uri, "ReceiveCoinPricesJson");
+
+            //Pulls Json and converts to string 
+            String JSONraw = client.DownloadString(uri);
+
+            //Sends back the JSON string
+            //InvokeClientMethodToAllAsync("Method Name", socketId, JSONraw);
+            await InvokeClientMethodToAllAsync("Method Name", socketId, JSONraw);
         }
 
         // Historical price for a coin

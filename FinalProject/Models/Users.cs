@@ -28,22 +28,6 @@ namespace FinalProject.Models
 
         }
 
-        public class Stocks
-        {
-            public int Id { get; set; }
-            public string name { get; set; }
-
-        }
-
-        public List<Stocks> getStocks()
-        {
-            //InfoHandler stock = new InfoHandler();
-
-            List<Stocks> stocks = new List<Stocks>();
-
-            return stocks;
-
-        }
 
     }
 }

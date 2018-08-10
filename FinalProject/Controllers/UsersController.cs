@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalProject.Models;
 using System.Dynamic;
+using System.Net;
+using Newtonsoft.Json;
 
 namespace FinalProject.Controllers
 {
@@ -28,11 +30,7 @@ namespace FinalProject.Controllers
 
         // GET: Users/Details/5
         public async Task<IActionResult> Details(string Username, string Pword)
-        {
-
-            dynamic mymodel = new ExpandoObject();
-
-            Console.WriteLine(ApiDataCalls.getCoinList());
+        {                     
 
 
             if (Username == null || Pword == null)
@@ -53,13 +51,6 @@ namespace FinalProject.Controllers
             {
                 return Content("Invalid password");
             }
-
-
-            mymodel.User = users.Username;
-            mymodel.Balance = users.Amount;
-            //mymodel.Stock1 = getUserStock(1);
-            //mymodel.Stock2 = getUserStock(2);
-            //mymodel.Stock3 = getUserStock(3);
 
             return View(users);
         }
