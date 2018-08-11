@@ -79,6 +79,8 @@ namespace FinalProject
         //        "USD": 17531.56
         //    }
         //}
+
+
         public async void getHistoricalPrices(string socketId, string coin, DateTime dateTime)
         {
             var unixTimestamp = (Int32)(DateTime.UtcNow.Subtract(dateTime)).TotalSeconds;

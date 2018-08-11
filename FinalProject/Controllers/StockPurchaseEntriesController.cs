@@ -9,6 +9,7 @@ using FinalProject.Models;
 
 namespace FinalProject.Controllers
 {
+    [Route("stockpurchaseentry")]
     public class StockPurchaseEntryController : Controller
     {
         private readonly FinalProjectContext _context;
@@ -45,10 +46,17 @@ namespace FinalProject.Controllers
         }
 
         // GET: StockPurchaseEntry/Create
-        public IActionResult Create()
+        [Route("Create")]
+        public IActionResult Create(int id)
         {
-            ViewData["UsersId"] = new SelectList(_context.Users, "Id", "Id");
-            return View();
+            
+            Console.WriteLine("\n\n" + id + "\n\n");
+
+            //Passes UsersId into the view
+            var data = new StockPurchaseEntry();
+            data.UsersId = id;
+
+            return View(data);
         }
 
         // POST: StockPurchaseEntry/Create

@@ -22,6 +22,8 @@ namespace FinalProject.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime Created_At { get; set; }
 
+
+
         public ICollection<StockPurchaseEntry> StockPurchaseEntry
         {
             get; set;
@@ -30,4 +32,6 @@ namespace FinalProject.Models
 
 
     }
+
+   
 }

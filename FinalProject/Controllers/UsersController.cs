@@ -9,6 +9,7 @@ using FinalProject.Models;
 using System.Dynamic;
 using System.Net;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Routing;
 
 namespace FinalProject.Controllers
 {
@@ -66,15 +67,19 @@ namespace FinalProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Username,Pword,Amount")] Users users)
+        public async Task<IActionResult> Create([Bind("Username,Pword,Amount")] Users users) //need to insert Stock purchase entry for this user
         {
             if (ModelState.IsValid)
             {
                 _context.Add(users);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                return RedirectToAction("Create", new RouteValueDictionary(
+                    new { controller = "StockPurchaseEntry", action = "Create", id = users.Id }));
             }
-            return View(users);
+
+            
+            return View();
         }
 
         // GET: Users/Edit/5
