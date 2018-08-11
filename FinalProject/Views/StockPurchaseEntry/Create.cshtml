@@ -1,4 +1,4 @@
-﻿@model FinalProject.Models.StockPurchaseEntry
+﻿@model FinalProject.Models.Stocks
 
 @{
     ViewData["Title"] = "Create";
@@ -9,26 +9,24 @@
 <h4>StockPurchaseEntry</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4">       
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="UsersId" class="control-label">User: @Html.DisplayFor(model => model.UsersId)</label>
+                <label asp-for="UsersId" class="control-label" >User: @Html.DisplayFor(model => model.UsersId)</label>
+                <input asp-for="UsersId" class="form-control" value="model => model.UsersId" />
             </div>
             <div class="form-group">
-                <label asp-for="Company_Name" class="control-label"></label>
-                <input asp-for="Company_Name" class="form-control" />
-                <span asp-validation-for="Company_Name" class="text-danger"></span>
+                <label asp-for="stock1" class="control-label">Stock:</label>
+                <input asp-for="stock1" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="Purchased_Amount" class="control-label"></label>
-                <input asp-for="Purchased_Amount" class="form-control" />
-                <span asp-validation-for="Purchased_Amount" class="text-danger"></span>
+                <label asp-for="stock2" class="control-label">Stock:</label>
+                <input asp-for="stock2" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="Amount_Paid" class="control-label"></label>
-                <input asp-for="Amount_Paid" class="form-control" />
-                <span asp-validation-for="Amount_Paid" class="text-danger"></span>
+                <label asp-for="stock3" class="control-label">Stock:</label>
+                <input asp-for="stock3" class="form-control" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

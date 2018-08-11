@@ -16,8 +16,18 @@ namespace FinalProject.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime Created_At { get; set; }
 
+
         public Users Users { get; set; }
     }
 
-   
+    public partial class Stocks
+    {
+        public int UsersId { get; set; }
+        public string stock1 { get; set; }
+        public string stock2 { get; set; }
+        public string stock3 { get; set; }
+
+    }
+
+
 }

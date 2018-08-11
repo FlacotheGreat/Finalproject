@@ -9,10 +9,11 @@ using FinalProject.Models;
 
 namespace FinalProject.Controllers
 {
-    [Route("stockpurchaseentry")]
+    
     public class StockPurchaseEntryController : Controller
     {
         private readonly FinalProjectContext _context;
+        public Stocks data = new Stocks();
 
         public StockPurchaseEntryController(FinalProjectContext context)
         {
@@ -46,14 +47,13 @@ namespace FinalProject.Controllers
         }
 
         // GET: StockPurchaseEntry/Create
-        [Route("Create")]
+        
         public IActionResult Create(int id)
         {
             
             Console.WriteLine("\n\n" + id + "\n\n");
 
             //Passes UsersId into the view
-            var data = new StockPurchaseEntry();
             data.UsersId = id;
 
             return View(data);
@@ -64,16 +64,47 @@ namespace FinalProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UsersId,Company_Name,Purchased_Amount,Amount_Paid")] StockPurchaseEntry stockPurchaseEntry)
+        public async Task<IActionResult> Create([Bind("UsersId,stock1,stock2,stock3")]
+        Stocks stock)
         {
+           
+            StockPurchaseEntry UserEntry = new StockPurchaseEntry();
+
+            UserEntry.UsersId = stock.UsersId;
+            for (int i = 1; i <=3; i++)
+            {
+                if (i == 1)
+                {
+                   UserEntry.Company_Name = stock.stock1;
+                }
+                else if (i == 2)
+                {
+                   UserEntry.Company_Name = stock.stock2;
+                }
+                else if (i == 3)
+                {
+                   UserEntry.Company_Name = stock.stock3;
+                }
+
+                //
+
+                break;
+            }
+            /*[Bind("UsersId,Company_Name,Purchased_Amount,Amount_Paid")]
+        StockPurchaseEntry stockPurchaseEntry
+        /*
             if (ModelState.IsValid)
             {
                 _context.Add(stockPurchaseEntry);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UsersId"] = new SelectList(_context.Users, "Id", "Id", stockPurchaseEntry.UsersId);
-            return View(stockPurchaseEntry);
+            ViewData["UsersId"] = new SelectList(_context.Users, "Id", "Id", stockPurchaseEntry.UsersId);*/
+
+            Console.WriteLine("This is the User" + stock.UsersId + "Stock 1:" + stock.stock1 + "Stock 2:" + stock.stock2 + "Stock 3:" + stock.stock3);
+
+
+            return View();
         }
 
         // GET: StockPurchaseEntry/Edit/5
