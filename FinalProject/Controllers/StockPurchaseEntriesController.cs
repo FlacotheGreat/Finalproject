@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalProject.Models;
+using System.Net;
+using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace FinalProject.Controllers
 {
@@ -76,6 +79,8 @@ namespace FinalProject.Controllers
                 if (i == 1)
                 {
                    UserEntry.Company_Name = stock.stock1;
+                    stocksPurchased(UserEntry.Company_Name);
+
                 }
                 else if (i == 2)
                 {
@@ -194,5 +199,30 @@ namespace FinalProject.Controllers
         {
             return _context.StockPurchaseEntry.Any(e => e.Id == id);
         }
+
+
+
+
+        private decimal stocksPurchased(string stock)
+        {
+            decimal sharesPurchased = 0;
+            var coinString = stock;
+            var uri = $"https://min-api.cryptocompare.com/data/pricemulti?fsyms={coinString}&tsyms=USD";
+
+            WebClient client = new WebClient();
+
+            string rawData = client.DownloadString(uri);
+
+            dynamic stuff = JsonConvert.DeserializeObject(rawData);
+
+            string price = stuff.BTC.USD;
+            Console.WriteLine(rawData);
+
+            Console.WriteLine(price);
+           
+            return sharesPurchased;
+
+        }
+
     }
 }
