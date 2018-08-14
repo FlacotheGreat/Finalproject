@@ -18,7 +18,7 @@
 + running history of stocks must be saved -- not done
 + chart to allow user to see investments over time, including modified investment tables -- not done
 + the whole thing needs to look clean on a phone -- not done
-+ hash the password client side "secure" -- not done
++ hash the password client side "secure" -- done
 
 ### login and logout stuff
 
