@@ -100,13 +100,10 @@
 @section scripts{
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
-        var costList = new Array();
-        var currencyNames = new Array();
-        foreach (var item in Model.StockPurchaseEntry) {
-          currencyNames.push( item.Company_Name.ToString() );
-          costList.push( item.Purchased_Amount.ToString() );
-        }
-        console.log(costList, currencyNames);
+        var chartData = @Model.StockPurchaseEntry;
+        console.log("chart data: ");
+        //console.log(chartData);
+
         google.charts.load('current', { 'packages': ['corechart'] });
         google.charts.setOnLoadCallback(drawChart);
 
@@ -115,9 +112,7 @@
             data.addColumn('string', 'Currency');
             data.addColumn('number', 'NumShares');
             data.addRows([
-              [currencyNames[0], costList[0]],
-              [currencyNames[1], costList[1]],
-              [currencyNames[2], costList[2]],
+              [chartData.Company_Name.ToString(), chartData.Purchased_Amount.ToString()]
             ]);
 
             // Simple Pie Chart:
