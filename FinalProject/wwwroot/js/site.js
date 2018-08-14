@@ -197,7 +197,7 @@ window.onload = function () {
     }
 
     connection.clientMethods["ReceiveJSONChartData"] = (socketId, jsonComp1, jsonComp2, jsonComp3) => {
-      displayChart(jsonComp1, jsonComp2, jsonComp3, )
+      displayChart(jsonComp1, jsonComp2, jsonComp3);
     }
 
     connection.start()
