@@ -118,6 +118,7 @@ function updateUserDataFromChart() {
   //either do the math here
 
   //or just pass it to the server
+  connection.invoke("updateUserData", connection.connectionId, newShares1, newShares2, newShares3);
 }
 
 //displaying purchased stocks on user page
@@ -126,6 +127,9 @@ function createStockTblFromJson(jsonDataComp1, jsonDataComp2, jsonDataComp3){
   parseData1 = JSON.parse(jsonDataComp1);
   parseData2 = JSON.parse(jsonDataComp2);
   parseData3 = JSON.parse(jsonDataComp3);
+  console.log(parseData1);
+  console.log(parseData2);
+  console.log(parseData3);
 
   //company 1
   document.getElementById("CompCurPrice1").innerHTML = parseData1.data.quotes.USD.price;

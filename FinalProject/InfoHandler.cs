@@ -118,5 +118,13 @@ namespace FinalProject
         public async Task parsedDataFromJS(string socketId){ //add additional parameters
           //put received variables wherever you want them
         }
+
+        //called to send data after user has updated the chart
+        public async Task updateUserData(string socketId, string newShares1, string newShares2, string newShares3){
+          //general idea
+          //maybe convert incoming values to ints if needed
+          //do the math
+          //
+        }
     }
 }
