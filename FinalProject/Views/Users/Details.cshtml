@@ -47,13 +47,25 @@
                 <th> Earnings </th>
                 <th> Current Shares (this can be adjusted) </th>
             </tr>
+
+            @foreach (var item in Model.StockPurchaseEntry)
+            {
+
+
+                string Id = item.Id.ToString();
+                string Purchased_Amount = item.Purchased_Amount.ToString();
+                string Amount_Paid = item.Amount_Paid.ToString();
+                string Created_At = item.Created_At.ToString();
+
+
                 <tr>
-                    <td id=CompSymbol1>@Html.DisplayFor(model =>model.StockPurchaseEntry.First().Company_Name)</td>
-                    <td id=CompCurPrice1>@Html.DisplayFor(model => model.StockPurchaseEntry.First().Amount_Paid)</td>
-                    <td id=UserInvestment1>@Html.DisplayFor(model => model.StockPurchaseEntry.First().Amount_Paid)</td>
-                    <td id=UserEarnings1>@Html.DisplayFor(model => model.StockPurchaseEntry.First().Purchased_Amount)</td>
+                    <td id=CompSymbol1>@Html.DisplayFor(modelItem => Id)</td>
+                    <td id=CompCurPrice1>@Html.DisplayFor(modelItem => Purchased_Amount)</td>
+                    <td id=UserInvestment1>@Html.DisplayFor(modelItem => Amount_Paid)</td>
+                    <td id=UserEarnings1>@Html.DisplayFor(modelItem => Created_At)</td>
                     <td><input type="text" id=CompCurrShares1></td>
                 </tr>
+            }
         </table>
         <input align="center" type="button" id="updateBtn" onclick="updateUserDataFromChart()" value="UPDATE" />
         <h1 align="center"> Your Chart </h1>
