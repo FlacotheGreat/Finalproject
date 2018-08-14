@@ -82,9 +82,7 @@
         </table>
         <input align="center" type="button" id="updateBtn" onclick="updateUserDataFromChart()" value="UPDATE" />
         <h1 align="center"> Your Chart </h1>
-        <canvas id="displayChart" width='1000px' height='800px' style='border:1px solid #000000;'>
-            Your browser does not support html5
-        </canvas>
+        <div id="pieChart"></div>
         <p></p>
         <div align="center">
           <input align="center" type="button" id="pieChart" value="PIE" />
@@ -107,43 +105,23 @@
 
         function drawChart() {
             var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Tax Type');
-            data.addColumn('number', 'Tax Percentage');
+            data.addColumn('string', 'Currency');
+            data.addColumn('number', 'NumShares');
             data.addRows([
-                ['Soc. Sec. Tax', { v: 30, f: '30%' }],
-                ['Income Tax', { v: 35, f: '35%' }],
-                ['Borrowing', { v: 15, f: '15%' }],
-                ['Corp. Tax', { v: 12, f: '12%' }],
-                ['Misc', { v: 8, f: '8%' }]
+                foreach (var item in Model.StockPurchaseEntry)
+                {
+                  [@Html.DisplayFor(modelItem => Company_Name), @Html.DisplayFor(modelItem => Purchased_Amount)]
+                }
             ]);
 
             // Simple Pie Chart:
             var option = {
-                title: 'Tax Structure in US',
+                title: 'Currency Pie Chart',
                 width: 500,
                 height: 400
             };
 
-            var chart = new google.visualization.PieChart(document.getElementById('chart1'));
-            chart.draw(data, option);
-
-            //3D Pie Chart:
-            option.is3D = true;
-            chart = new google.visualization.PieChart(document.getElementById('chart2'));
-            chart.draw(data, option);
-
-            // Exploded Pie Chart:
-            option.is3D = false;
-            option.slices = {
-                1: { offset: 0.3 },
-                3: { offset: 0.5 }
-            };
-            chart = new google.visualization.PieChart(document.getElementById('chart3'));
-            chart.draw(data, option);
-
-            // Exploded 3D Pie Chart:
-            option.is3D = true;
-            chart = new google.visualization.PieChart(document.getElementById('chart4'));
+            var chart = new google.visualization.PieChart(document.getElementById('pieChart'));
             chart.draw(data, option);
         }
     </script>
