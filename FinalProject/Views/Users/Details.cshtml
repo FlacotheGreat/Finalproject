@@ -58,7 +58,7 @@
                 string Purchased_Amount = item.Purchased_Amount.ToString();
                 string Amount_Paid = item.Amount_Paid.ToString();
                 string Created_At = item.Created_At.ToString();
-        
+
 
                 var coinString = Id;
                 var uri = $"https://min-api.cryptocompare.com/data/pricemulti?fsyms={coinString}&tsyms=USD";
@@ -100,6 +100,13 @@
 @section scripts{
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
+        var costList = new Array();
+        var currencyNames = new Array();
+        foreach (var item in Model.StockPurchaseEntry) {
+          currencyNames.push( item.Company_Name.ToString() );
+          costList.push( item.Purchased_Amount.ToString() );
+        }
+        console.log(costList, currencyNames);
         google.charts.load('current', { 'packages': ['corechart'] });
         google.charts.setOnLoadCallback(drawChart);
 
@@ -108,10 +115,9 @@
             data.addColumn('string', 'Currency');
             data.addColumn('number', 'NumShares');
             data.addRows([
-                foreach (var item in Model.StockPurchaseEntry)
-                {
-                  [@Html.DisplayFor(modelItem => Company_Name), @Html.DisplayFor(modelItem => Purchased_Amount)]
-                }
+              [currencyNames[0], costList[0]],
+              [currencyNames[1], costList[1]],
+              [currencyNames[2], costList[2]],
             ]);
 
             // Simple Pie Chart:
