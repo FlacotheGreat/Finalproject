@@ -79,7 +79,7 @@ namespace FinalProject.Controllers
                 if (i == 1)
                 {
                    UserEntry.Company_Name = stock.stock1;
-                    stocksPurchased(UserEntry.Company_Name);
+                    stocksPurchased(UserEntry.Company_Name, UserEntry.UsersId);
 
                 }
                 else if (i == 2)
@@ -106,9 +106,8 @@ namespace FinalProject.Controllers
             }
             ViewData["UsersId"] = new SelectList(_context.Users, "Id", "Id", stockPurchaseEntry.UsersId);*/
 
-            Console.WriteLine("This is the User" + stock.UsersId + "Stock 1:" + stock.stock1 + "Stock 2:" + stock.stock2 + "Stock 3:" + stock.stock3);
-
-
+            Console.WriteLine("This is the User " + stock.UsersId + "Stock 1:" + stock.stock1 + "Stock 2:" + stock.stock2 + "Stock 3:" + stock.stock3);
+            
             return View();
         }
 
@@ -203,23 +202,28 @@ namespace FinalProject.Controllers
 
 
 
-        private decimal stocksPurchased(string stock)
+        private decimal stocksPurchased(string stock,int userID)
         {
             decimal sharesPurchased = 0;
             var coinString = stock;
             var uri = $"https://min-api.cryptocompare.com/data/pricemulti?fsyms={coinString}&tsyms=USD";
 
             WebClient client = new WebClient();
-
             string rawData = client.DownloadString(uri);
 
             dynamic stuff = JsonConvert.DeserializeObject(rawData);
+            decimal price = stuff[stock].USD;
 
-            string price = stuff.BTC.USD;
-            Console.WriteLine(rawData);
+            var users = _context.Users
+                            .Select(m => m.Id == userID);
 
-            Console.WriteLine(price);
-           
+            //decimal balance = decimal.Round(users.Amount / 3,2);
+
+            
+
+            Console.WriteLine("\n\n" + users + "\n\n");
+
+
             return sharesPurchased;
 
         }

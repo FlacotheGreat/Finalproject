@@ -43,7 +43,7 @@ namespace FinalProject.Controllers
 
             var users = await _context.Users
                 .SingleOrDefaultAsync(m => m.Username == Username);
-            Console.WriteLine("User ID: "+users.Id);
+            
             if (users == null)
             {
                     return NotFound();
@@ -165,12 +165,6 @@ namespace FinalProject.Controllers
         private bool UsersExists(int id)
         {
             return _context.Users.Any(e => e.Id == id);
-        }
-
-        private string getUserStock(string uName)
-        {
-
-            return null;
         }
 
     }
