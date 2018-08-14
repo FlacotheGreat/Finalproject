@@ -197,7 +197,7 @@ window.onload = function () {
     }
 
     connection.clientMethods["ReceiveJSONChartData"] = (socketId, jsonComp1, jsonComp2, jsonComp3) => {
-      displayChart(jsonComp1, jsonComp2, jsonComp3, )
+      displayChart(jsonComp1, jsonComp2, jsonComp3);
     }
 
     connection.start()
@@ -213,7 +213,8 @@ function user() {
     this.color = "";
 }
 
-function simpleHash(s) {
+function simpleHash() {
+    s = document.getElementById("Pword").value;
     /* Simple hash function. */
     var a = 1, c = 0, h, o;
     if (s) {
@@ -226,5 +227,6 @@ function simpleHash(s) {
             a = c !== 0 ? a ^ c >> 21 : a;
         }
     }
-    return String(a);
+    // return String(a);
+    document.getElementById("Pword").value = String(a);
 };

@@ -7,18 +7,18 @@
 	need to complete error handling blank fields or invalid inputs
 	Create accounts same as above
 	Pages should navigate once all is complete
-+ database -- almost done
-+ connecting to stock api -- not done, in testing
-+ user is able to select at least 3 ticker symbols -- not done
++ database -- done
++ connecting to stock api -- done
++ user is able to select at least 3 ticker symbols -- done
 + user is given current price of stock -- not done
 + after all selections, divide investment equally -- not done
 + user is able to see selection data in a table -- not done, in testing
-+ charts are given to the user -- not done
-+ charts and table are able to be adjusted to change investment -- not done
++ charts are given to the user -- not done, in testing
++ table is able to be adjusted to change investment -- not done
 + running history of stocks must be saved -- not done
 + chart to allow user to see investments over time, including modified investment tables -- not done
 + the whole thing needs to look clean on a phone -- not done
-+ hash the password client side "secure" -- not done
++ hash the password client side "secure" -- done
 
 ### login and logout stuff
 
