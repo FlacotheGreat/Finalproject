@@ -64,12 +64,12 @@ namespace FinalProject
             //Appends Coinstring into uri
             var uri = $"https://min-api.cryptocompare.com/data/pricemulti?fsyms={coinString}&tsyms=USD";
 
-            //Pulls Json and converts to string 
+            //Pulls Json and converts to string
             String JSONraw = client.DownloadString(uri);
 
             //Sends back the JSON string
             //InvokeClientMethodToAllAsync("Method Name", socketId, JSONraw);
-            await InvokeClientMethodToAllAsync("Method Name", socketId, JSONraw);
+            await InvokeClientMethodToAllAsync("ParseValueAndCreateTable", socketId, JSONraw);
         }
 
         // Historical price for a coin

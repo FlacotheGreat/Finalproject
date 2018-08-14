@@ -105,7 +105,19 @@ function requestJSONData(){
 }
 
 function requestCoinListData() {
-    connection.invoke("getCoinList", connection.connectionId);
+  connection.invoke("getCoinList", connection.connectionId);
+}
+
+//used when the update button is clicked, should get the share values and pass them to csharp for updating
+//or math can be done here
+function updateUserDataFromChart() {
+  //get new shar
+  var newShares1 = document.getElementById("CompCurrShares1").value;
+  var newShares2 = document.getElementById("CompCurrShares2").value;
+  var newShares3 = document.getElementById("CompCurrShares3").value;
+  //either do the math here
+
+  //or just pass it to the server
 }
 
 //displaying purchased stocks on user page
@@ -160,16 +172,24 @@ window.onload = function () {
     };
 
     connection.clientMethods["ParseAndReturnJson"] = (socketId, jsonStr) => {
+      console.log("incoming JSON data: \n");
+      console.log("jsonStr");
       //parse the JSON object
       parseData = JSON.parse(jsonStr);
       //get whatever we want out of JSON
-
+      var compName = parseData.data.companyName;
       //send it back to the server
-      connection.invoke("parsedDataFromJS", connection.connectionId); //add whatever variables we want
+      connection.invoke("parsedDataFromJS", connection.connectionId, compName); //add whatever variables we want
     }
 
-    connection.clientMethods["ReceiveUserChoicesJson"] = (socketId, jsonComp1, jsonComp2, jsonComp3) => {
-      createStockTblFromJson(jsonComp1, jsonComp2, jsonComp3);
+    connection.clientMethods["ParseValueAndCreateTable"] = (socketId, jsonData) => {
+      console.log("incoming json data: \n");
+      console.log(jsonData);
+      JSON.stringify(jsonData);
+      parseData = JSON.parse(jsonData);
+      console.log("\n transformed json data: \n");
+      console.log(parseData)
+      createStockTblFromJson();
     }
 
     connection.clientMethods["ReceiveJSONChartData"] = (socketId, jsonComp1, jsonComp2, jsonComp3) => {
@@ -189,7 +209,7 @@ function user() {
     this.color = "";
 }
 
-var hash = function (s) {
+function simpleHash(s) {
     /* Simple hash function. */
     var a = 1, c = 0, h, o;
     if (s) {
