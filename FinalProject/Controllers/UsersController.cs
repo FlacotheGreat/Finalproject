@@ -31,9 +31,7 @@ namespace FinalProject.Controllers
 
         // GET: Users/Details/5
         public async Task<IActionResult> Details(string Username, string Pword)
-        {                     
-
-
+        {
             if (Username == null || Pword == null)
             {
                 return Content("Text fields can not be blank and honestly if you made it this far bravo \n" +
@@ -41,9 +39,9 @@ namespace FinalProject.Controllers
                     " https://www.reddit.com/r/food/comments/7prr42/prochef_chocolate_chip_cookies/");
             }
 
-            var users = await _context.Users
+            var users = await _context.Users.Include(x => x.StockPurchaseEntry)
                 .SingleOrDefaultAsync(m => m.Username == Username);
-            
+
             if (users == null)
             {
                     return NotFound();
@@ -72,12 +70,18 @@ namespace FinalProject.Controllers
             
             if (ModelState.IsValid)
             {
+                try
+                {
+                    _context.Add(users);
+                    await _context.SaveChangesAsync();
 
-                _context.Add(users);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction("Create", new RouteValueDictionary(
-                    new { controller = "StockPurchaseEntry", action = "Create", id = users.Id }));
+                    return RedirectToAction("Create", new RouteValueDictionary(
+                        new { controller = "StockPurchaseEntry", action = "Create", id = users.Id }));
+                }
+                catch (DbUpdateException)
+                {
+                    return StatusCode(409);
+                }
             }
 
             
