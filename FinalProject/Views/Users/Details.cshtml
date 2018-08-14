@@ -42,30 +42,43 @@
         <table border="1px solid black" ;>
             <tr>
                 <th> Symbol </th>
-                <th> Current Price </th>
+                <th> Current Shares </th>
                 <th> Amount Invested </th>
-                <th> Earnings </th>
+                <th> Price </th>
                 <th> Current Shares (this can be adjusted) </th>
+                <th> Change Investments? </th>
             </tr>
-
+            @using System.Net;
+            @using Newtonsoft.Json;
             @foreach (var item in Model.StockPurchaseEntry)
             {
 
 
-                string Id = item.Id.ToString();
+                string Id = item.Company_Name.ToString();
                 string Purchased_Amount = item.Purchased_Amount.ToString();
                 string Amount_Paid = item.Amount_Paid.ToString();
                 string Created_At = item.Created_At.ToString();
+        
+
+                var coinString = Id;
+                var uri = $"https://min-api.cryptocompare.com/data/pricemulti?fsyms={coinString}&tsyms=USD";
+
+                WebClient client = new WebClient();
+                string rawData = client.DownloadString(uri);
+
+                dynamic stuff = JsonConvert.DeserializeObject(rawData);
+                string price = stuff[Id].USD;
 
 
-                <tr>
-                    <td id=CompSymbol1>@Html.DisplayFor(modelItem => Id)</td>
-                    <td id=CompCurPrice1>@Html.DisplayFor(modelItem => Purchased_Amount)</td>
-                    <td id=UserInvestment1>@Html.DisplayFor(modelItem => Amount_Paid)</td>
-                    <td id=UserEarnings1>@Html.DisplayFor(modelItem => Created_At)</td>
-                    <td><input type="text" id=CompCurrShares1></td>
-                </tr>
-            }
+                    <tr>
+                        <td id=CompSymbol1>@Html.DisplayFor(modelItem => Id)</td>
+                        <td id=CompCurPrice1>@Html.DisplayFor(modelItem => Purchased_Amount)</td>
+                        <td id=UserInvestment1>@Html.DisplayFor(modelItem => Amount_Paid)</td>
+                        <td id=UserEarnings1>@Html.DisplayFor(modelItem => price)</td>
+                        <td id=UserEarnings1>@Html.DisplayFor(modelItem => Created_At)</td>
+                        <td><input type="text" id=CompCurrShares1></td>
+                    </tr>
+        }
         </table>
         <input align="center" type="button" id="updateBtn" onclick="updateUserDataFromChart()" value="UPDATE" />
         <h1 align="center"> Your Chart </h1>
