@@ -69,8 +69,10 @@ namespace FinalProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Username,Pword,Amount")] Users users) //need to insert Stock purchase entry for this user
         {
+            
             if (ModelState.IsValid)
             {
+
                 _context.Add(users);
                 await _context.SaveChangesAsync();
 

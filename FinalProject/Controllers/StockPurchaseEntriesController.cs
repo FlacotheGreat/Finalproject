@@ -9,6 +9,7 @@ using FinalProject.Models;
 using System.Net;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Routing;
 
 namespace FinalProject.Controllers
 {
@@ -79,21 +80,41 @@ namespace FinalProject.Controllers
                 if (i == 1)
                 {
                    UserEntry.Company_Name = stock.stock1;
-                    stocksPurchased(UserEntry.Company_Name, UserEntry.UsersId);
+                   UserEntry.Purchased_Amount = stocksPurchased(UserEntry.Company_Name, UserEntry.UsersId);
+                   UserEntry.Amount_Paid = intitialBalance(UserEntry.UsersId);
 
+                    _context.Add(UserEntry);
+                    await _context.SaveChangesAsync();
+                   // _context.SaveChanges();
                 }
                 else if (i == 2)
                 {
-                   UserEntry.Company_Name = stock.stock2;
+                    UserEntry = new StockPurchaseEntry();
+                    UserEntry.UsersId = stock.UsersId;
+                    UserEntry.Company_Name = stock.stock2;
+                    UserEntry.Purchased_Amount = stocksPurchased(UserEntry.Company_Name, UserEntry.UsersId);
+                    UserEntry.Amount_Paid = intitialBalance(UserEntry.UsersId);
+
+                    _context.Add(UserEntry);
+                    //_context.SaveChanges();
+                    await _context.SaveChangesAsync();
+
                 }
                 else if (i == 3)
                 {
-                   UserEntry.Company_Name = stock.stock3;
+                    UserEntry = new StockPurchaseEntry();
+                    UserEntry.UsersId = stock.UsersId;
+                    UserEntry.Company_Name = stock.stock3;
+                    UserEntry.Purchased_Amount = stocksPurchased(UserEntry.Company_Name, UserEntry.UsersId);
+                    UserEntry.Amount_Paid = intitialBalance(UserEntry.UsersId);
+
+                    _context.Add(UserEntry);
+                    //_context.SaveChanges();
+                    await _context.SaveChangesAsync();
+
+
                 }
 
-                //
-
-                break;
             }
             /*[Bind("UsersId,Company_Name,Purchased_Amount,Amount_Paid")]
         StockPurchaseEntry stockPurchaseEntry
@@ -107,8 +128,12 @@ namespace FinalProject.Controllers
             ViewData["UsersId"] = new SelectList(_context.Users, "Id", "Id", stockPurchaseEntry.UsersId);*/
 
             Console.WriteLine("This is the User " + stock.UsersId + "Stock 1:" + stock.stock1 + "Stock 2:" + stock.stock2 + "Stock 3:" + stock.stock3);
-            
-            return View();
+            //await _context.SaveChangesAsync();
+            var user = _context.Users.First(x => x.Id == stock.UsersId);
+
+            return RedirectToAction("Details", new RouteValueDictionary(
+            new { controller = "Users", action = "Details", user.Username, user.Pword }));
+
         }
 
         // GET: StockPurchaseEntry/Edit/5
@@ -200,8 +225,6 @@ namespace FinalProject.Controllers
         }
 
 
-
-
         private decimal stocksPurchased(string stock,int userID)
         {
             decimal sharesPurchased = 0;
@@ -214,17 +237,23 @@ namespace FinalProject.Controllers
             dynamic stuff = JsonConvert.DeserializeObject(rawData);
             decimal price = stuff[stock].USD;
 
-            var users = _context.Users
-                            .Select(m => m.Id == userID);
+            var users = _context.Users.First(x => x.Id == userID).Amount;
 
-            //decimal balance = decimal.Round(users.Amount / 3,2);
+            decimal balance = decimal.Round(users / 3,2);
 
-            
-
-            Console.WriteLine("\n\n" + users + "\n\n");
+            sharesPurchased = balance / price;
 
 
             return sharesPurchased;
+        }
+
+        private decimal intitialBalance(int userID)
+        {
+            var users = _context.Users.First(x => x.Id == userID).Amount;
+
+            decimal balance = decimal.Round(users / 3, 2);
+
+            return balance;
 
         }
 
