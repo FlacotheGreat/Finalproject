@@ -8,7 +8,7 @@ using WebSocketManager.Common;
 using Microsoft.EntityFrameworkCore;
 using FinalProject.Models;
 using FinalProject.Controllers;
-
+using System.Collections.Generic;
 
 namespace FinalProject
 {
@@ -62,11 +62,15 @@ namespace FinalProject
         public async Task getCoinList(string socketId)
         {
 
-            var rawData = JsonConvert.SerializeObject(ApiDataCalls.itemsToPass).ToString();
+            //List < new { Amount_Paid = "", Company_Name = "", Created_At = "", Id = "", Purchased_Amount = "", Users } > list = new List<StockPurchaseEntry>();
+            List<StockPurchaseEntry> list = new List<StockPurchaseEntry>();
+            foreach (StockPurchaseEntry entry in ApiDataCalls.itemsToPass) {
+                entry.Users = null;
 
-            string Data = JsonConvert.DeserializeObject(rawData).ToString();
+                list.Add(entry);
+            }
 
-            Console.WriteLine(Data);
+            var rawData = JsonConvert.SerializeObject(list);
 
             var uri = "https://min-api.cryptocompare.com/data/all/coinlist";
             await getData(socketId, uri, "ReceiveCoinListJson");

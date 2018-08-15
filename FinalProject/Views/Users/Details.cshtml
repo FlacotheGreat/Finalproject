@@ -58,16 +58,14 @@
                 string Purchased_Amount = item.Purchased_Amount.ToString();
                 string Amount_Paid = item.Amount_Paid.ToString();
                 string Created_At = item.Created_At.ToString();
-
-
-                var coinString = Id;
-                var uri = $"https://min-api.cryptocompare.com/data/pricemulti?fsyms={coinString}&tsyms=USD";
+                
+                var uri = $"https://min-api.cryptocompare.com/data/price?fsym={Id}&tsyms=USD";
 
                 WebClient client = new WebClient();
                 string rawData = client.DownloadString(uri);
 
                 dynamic stuff = JsonConvert.DeserializeObject(rawData);
-                string price = stuff[Id].USD;
+                string price = stuff.USD;
 
 
                     <tr>
