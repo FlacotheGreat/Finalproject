@@ -138,10 +138,23 @@ namespace FinalProject
 
         //called to send data after user has updated the chart
         public async Task updateUserData(string socketId, string newShares1, string newShares2, string newShares3){
-          //general idea
-          //maybe convert incoming values to ints if needed
-          //do the math
-          //
+
+            string share1 = JsonConvert.DeserializeObject(newShares1).ToString();
+            string share2 = JsonConvert.DeserializeObject(newShares1).ToString();
+            string share3 = JsonConvert.DeserializeObject(newShares1).ToString();
+
+            //List<StockPurchaseEntry> list = new List<StockPurchaseEntry>();
+            //foreach (StockPurchaseEntry entry in ApiDataCalls.itemsToPass)
+            //{
+            //    entry.Users = null;
+
+            //    entry.Amount_Paid;
+
+            //    list.Add(entry);
+            //}
+
+
         }
+
     }
 }

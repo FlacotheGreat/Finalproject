@@ -176,7 +176,9 @@ function updateUserDataFromChart() {
   //either do the math here
 
   //or just pass it to the server
-  connection.invoke("updateUserData", connection.connectionId, newShares1, newShares2, newShares3);
+    connection.invoke("updateUserData", connection.connectionId, newShares1, newShares2, newShares3);
+
+    console.log(newShares1 + " " + newShares2 + " " + newShares3);
 }
 
 //displaying purchased stocks on user page

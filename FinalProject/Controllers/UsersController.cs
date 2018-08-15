@@ -50,11 +50,10 @@ namespace FinalProject.Controllers
             {
                 return Content("Invalid password");
             }
-            ApiDataCalls.curUser = users.Username;
-            ApiDataCalls.curId = users.Id;
+
+
             ApiDataCalls.itemsToPass = users.StockPurchaseEntry;
-
-
+            
             return View(users);
         }
 
@@ -176,6 +175,13 @@ namespace FinalProject.Controllers
         {
             return _context.Users.Any(e => e.Id == id);
         }
+
+        //public  updateTable(string param1 )
+        //{
+
+
+        //    return -1;
+        //}
 
     }
 }

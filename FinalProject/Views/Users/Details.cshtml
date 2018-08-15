@@ -2,95 +2,106 @@
 
 @{
     ViewData["Title"] = "Details";
+
+    int i = 1;
 }
 
-    <head>
-        <title>Chart Display</title>
+<head>
+    <title>Chart Display</title>
 
-    </head>
+</head>
 
-    <body onload="requestJSONData();">
-        <h2>Details</h2>
-        <div>
-            <hr />
-            <fieldset>
-                <legend>
-                    User details:
-                    <dl class="dl-horizontal" align="left">
-                        <dt align="left">
-                            Username:
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.Username)
-                        </dd>
-                        <dt align="left">
-                            Initial balance:
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.Amount)
-                        </dd>
-                        <dt align="left">
-                            Member since:
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.Created_At)
-                        </dd>
-                    </dl>
-                </legend>
-            </fieldset>
-        </div>
-        <table border="1px solid black" ;>
+<body onload="requestJSONData();">
+    <h2>Details</h2>
+    <div>
+        <hr />
+        <fieldset>
+            <legend>
+                User details:
+                <dl class="dl-horizontal" align="left">
+                    <dt align="left">
+                        Username:
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Username)
+                    </dd>
+                    <dt align="left">
+                        Initial balance:
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Amount)
+                    </dd>
+                    <dt align="left">
+                        Member since:
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Created_At)
+                    </dd>
+                </dl>
+            </legend>
+        </fieldset>
+    </div>
+    <table border="1px solid black" ;>
+        <tr>
+            <th> Symbol </th>
+            <th> Current Shares </th>
+            <th> Amount Invested </th>
+            <th> Price </th>
+            <th> Date purchased </th>
+            <th> Change Investments? </th>
+        </tr>
+        @using System.Net;
+        @using Newtonsoft.Json;
+        @foreach (var item in Model.StockPurchaseEntry)
+        {
+
+
+            string tableId = "CompCurrShares" + i;
+            string CompSymbolId = "CompSymbol" + i;
+            string CompCurPriceId = "CompCurPrice1" + i;
+            string UserInvestmentId = "UserInvestment" + i;
+            string UserEarningsId = "UserEarnings" + i;
+            string CreatedAtId = "CreatedAtId" + i;
+
+            string Id = item.Company_Name.ToString();
+            string Purchased_Amount = item.Purchased_Amount.ToString();
+            string Amount_Paid = item.Amount_Paid.ToString();
+            string Created_At = item.Created_At.ToString();
+
+            var uri = $"https://min-api.cryptocompare.com/data/price?fsym={Id}&tsyms=USD";
+
+            WebClient client = new WebClient();
+            string rawData = client.DownloadString(uri);
+
+            dynamic stuff = JsonConvert.DeserializeObject(rawData);
+            string price = stuff.USD;
+
+
             <tr>
-                <th> Symbol </th>
-                <th> Current Shares </th>
-                <th> Amount Invested </th>
-                <th> Price </th>
-                <th> Current Shares (this can be adjusted) </th>
-                <th> Change Investments? </th>
+                <td id=@CompSymbolId>@Html.DisplayFor(modelItem => Id)</td>
+                <td id=@CompCurPriceId>@Html.DisplayFor(modelItem => Purchased_Amount)</td>
+                <td id=@UserInvestmentId>@Html.DisplayFor(modelItem => Amount_Paid)</td>
+                <td id=@UserEarningsId>@Html.DisplayFor(modelItem => price)</td>
+                <td id=@CreatedAtId>@Html.DisplayFor(modelItem => Created_At)</td>
+                <td><input type="number" id=@tableId ></td>
             </tr>
-            @using System.Net;
-            @using Newtonsoft.Json;
-            @foreach (var item in Model.StockPurchaseEntry)
-            {
 
-
-                string Id = item.Company_Name.ToString();
-                string Purchased_Amount = item.Purchased_Amount.ToString();
-                string Amount_Paid = item.Amount_Paid.ToString();
-                string Created_At = item.Created_At.ToString();
-
-                var uri = $"https://min-api.cryptocompare.com/data/price?fsym={Id}&tsyms=USD";
-
-                WebClient client = new WebClient();
-                string rawData = client.DownloadString(uri);
-
-                dynamic stuff = JsonConvert.DeserializeObject(rawData);
-                string price = stuff.USD;
-
-
-                    <tr>
-                        <td id=CompSymbol1>@Html.DisplayFor(modelItem => Id)</td>
-                        <td id=CompCurPrice1>@Html.DisplayFor(modelItem => Purchased_Amount)</td>
-                        <td id=UserInvestment1>@Html.DisplayFor(modelItem => Amount_Paid)</td>
-                        <td id=UserEarnings1>@Html.DisplayFor(modelItem => price)</td>
-                        <td id=UserEarnings1>@Html.DisplayFor(modelItem => Created_At)</td>
-                        <td><input type="text" id=CompCurrShares1></td>
-                    </tr>
+            i++;
         }
-        </table>
-        <input align="center" type="button" id="updateBtn" onclick="updateUserDataFromChart()" value="UPDATE" />
-        <h1 align="center"> Your Chart </h1>
-        <canvas id="displayChart" width="600" height="400"></canvas>
-        <div id="pieChart"></div>
+    </table>
+    <input align="center" type="button" id="updateBtn" onclick="updateUserDataFromChart()" value="UPDATE" />
+    <h1 align="center"> Your Chart </h1>
+    <canvas id="displayChart" width="600" height="400"></canvas>
+    <div id="pieChart"></div>
+    <p></p>
+    <div align="center">
+        <input align="center" type="button" id="pieChart" value="PIE" onclick="requestCoinListData()" />
+        <input align="center" type="button" id="barChart" value="BAR" />
+        <input align="center" type="button" id="lineChart" value="LINE" />
         <p></p>
-        <div align="center">
-          <input align="center" type="button" id="pieChart" value="PIE" onclick="requestCoinListData()"/>
-          <input align="center" type="button" id="barChart" value="BAR" />
-          <input align="center" type="button" id="lineChart" value="LINE" />
-          <p></p>
-          <a asp-action="Index">Logout</a>
-        </div>
+        <a asp-action="Index">Logout</a>
+    </div>
 
-    </body>
+</body>
 
-    <script type="text/javascript" src="~/js/site.js"></script>
+<script type="text/javascript" src="~/js/site.js"></script>
