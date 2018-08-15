@@ -75,7 +75,46 @@ namespace FinalProject
             // var uri = "https://min-api.cryptocompare.com/data/all/coinlist";
             // await getData(socketId, uri, "ReceiveCoinListJson");
             //await InvokeClientMethodAsync(socketId, "ParseJSONForChart", rawData);
-            await InvokeClientMethodToAllAsync("ParseValueAndCreateTable", socketId, rawData);        }
+            await InvokeClientMethodToAllAsync("ParseValueAndCreatePie", socketId, rawData);
+       }
+
+       public async Task getCoinList1(string socketId)
+       {
+
+           //List < new { Amount_Paid = "", Company_Name = "", Created_At = "", Id = "", Purchased_Amount = "", Users } > list = new List<StockPurchaseEntry>();
+           List<StockPurchaseEntry> list = new List<StockPurchaseEntry>();
+           foreach (StockPurchaseEntry entry in ApiDataCalls.itemsToPass) {
+               entry.Users = null;
+
+               list.Add(entry);
+           }
+
+           var rawData = JsonConvert.SerializeObject(list);
+
+           // var uri = "https://min-api.cryptocompare.com/data/all/coinlist";
+           // await getData(socketId, uri, "ReceiveCoinListJson");
+           //await InvokeClientMethodAsync(socketId, "ParseJSONForChart", rawData);
+           await InvokeClientMethodToAllAsync("ParseValueAndCreateBar", socketId, rawData);
+      }
+
+      public async Task getCoinList2(string socketId)
+      {
+
+          //List < new { Amount_Paid = "", Company_Name = "", Created_At = "", Id = "", Purchased_Amount = "", Users } > list = new List<StockPurchaseEntry>();
+          List<StockPurchaseEntry> list = new List<StockPurchaseEntry>();
+          foreach (StockPurchaseEntry entry in ApiDataCalls.itemsToPass) {
+              entry.Users = null;
+
+              list.Add(entry);
+          }
+
+          var rawData = JsonConvert.SerializeObject(list);
+
+          // var uri = "https://min-api.cryptocompare.com/data/all/coinlist";
+          // await getData(socketId, uri, "ReceiveCoinListJson");
+          //await InvokeClientMethodAsync(socketId, "ParseJSONForChart", rawData);
+          await InvokeClientMethodToAllAsync("ParseValueAndCreateLine", socketId, rawData);
+     }
 
 
         //Create String array of User coins to pass into GetPrices

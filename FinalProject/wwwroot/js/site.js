@@ -29,14 +29,36 @@ window.onload = function () {
         connection.invoke("parsedDataFromJS", connection.connectionId, compName); //add whatever variables we want
     }
 
-    connection.clientMethods["ParseValueAndCreateTable"] = (socketId, jsonData) => {
+    connection.clientMethods["ParseValueAndCreatePie"] = (socketId, jsonData) => {
         console.log("incoming json data: \n");
         console.log(jsonData);
         JSON.stringify(jsonData);
         parseData = JSON.parse(jsonData);
         console.log("\n transformed json data: \n");
         console.log(parseData);
-        displayChart(parseData[0], parseData[1], parseData[2], "pie");
+        displayPieChart(parseData[0], parseData[1], parseData[2], "pie");
+        // createStockTblFromJson();
+    }
+
+    connection.clientMethods["ParseValueAndCreateBar"] = (socketId, jsonData) => {
+        console.log("incoming json data: \n");
+        console.log(jsonData);
+        JSON.stringify(jsonData);
+        parseData = JSON.parse(jsonData);
+        console.log("\n transformed json data: \n");
+        console.log(parseData);
+        displayBarChart(parseData[0], parseData[1], parseData[2], "pie");
+        // createStockTblFromJson();
+    }
+
+    connection.clientMethods["ParseValueAndCreateLine"] = (socketId, jsonData) => {
+        console.log("incoming json data: \n");
+        console.log(jsonData);
+        JSON.stringify(jsonData);
+        parseData = JSON.parse(jsonData);
+        console.log("\n transformed json data: \n");
+        console.log(parseData);
+        displayLineChart(parseData[0], parseData[1], parseData[2], "pie");
         // createStockTblFromJson();
     }
 
@@ -56,7 +78,7 @@ window.onload = function () {
 //getting data out to give to js charts
 
 //this needs to accept preferably a list of names and quantity
-function displayChart(compData1, compData2, compData3, chartChoice) {
+function displayPieChart(compData1, compData2, compData3) {
   // var jQueryScript = document.createElement('script');
   // jQueryScript.setAttribute('src','https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js');
   // document.head.appendChild(jQueryScript);
@@ -70,92 +92,126 @@ function displayChart(compData1, compData2, compData3, chartChoice) {
   //get and clear the canvas
   var c = document.getElementById("displayChart");
   var ctx = c.getContext("2d");
-  // ctx.clearRect(0, 0, 600, 600);
+  ctx.clearRect(0, 0, 600, 400);
   //read list
   //give it to the chart
-  if(chartChoice == "bar"){
-    var chart = new Chart(ctx, {
+  var chart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: currencyNames, //this needs to be the names of the currency
+      datasets: [{
+        label: "User Pie Chart",
+        backgroundColor: [
+          'rgb(0, 0, 255)',
+				  'rgb(255, 0, 0)',
+				  'rgb(0, 255, 0)',
+        ],
+        borderColor: 'rgb(0, 0, 0)',
+        data: [compData1.Purchased_Amount, compData2.Purchased_Amount, compData3.Purchased_Amount], // current value of each currency
+      }]
+    },
+
+  options: {
+    responsive: false,
+    // maintainAspectRatio: true
+  }
+  });
+}
+
+function displayBarChart(compData1, compData2, compData3) {
+  // var jQueryScript = document.createElement('script');
+  // jQueryScript.setAttribute('src','https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js');
+  // document.head.appendChild(jQueryScript);
+  //parse the JSON data
+  //parseData1 = JSON.parse(compData1);
+  //parseData2 = JSON.parse(compData2);
+  //parseData3 = JSON.parse(compData3);
+  console.log(compData1);
+  var currencyNames = [compData1.Company_Name, compData2.Company_Name, compData3.Company_Name];
+
+  //get and clear the canvas
+  var c = document.getElementById("displayChart");
+  var ctx = c.getContext("2d");
+  ctx.clearRect(0, 0, 600, 400);
+  //read list
+  //give it to the chart
+  var chart = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: [], //these need to be filled in, pulled in from each day or something since purchase
+      labels: [], //this needs to be the names of the currency
       datasets: [{
         label: currencyNames[0], //this should be the name of the first company
         backgroundColor: 'rgb(0, 0, 255)',
         borderColor: 'rgb(0, 0, 0)',
-        data: [] // currency value at each label
+        data: [compData1.Purchased_Amount] // currency value at each label
       },
       {
         label: currencyNames[1], //this should be the name of the second company
         backgroundColor: 'rgb(0, 255, 0)',
         borderColor: 'rgb(0, 0, 0)',
-        data: [] // currency value at each label
+        data: [compData2.Purchased_Amount] // currency value at each label
       },
       {
         label: currencyNames[2], //this should be the name of the third company
         backgroundColor: 'rgb(255, 0, 0)',
         borderColor: 'rgb(0, 0, 0)',
-        data: [] // currency value at each label
+        data: [compData3.Purchased_Amount] // currency value at each label
       }]
     },
 
-    options: {
-      responsive: false,
-      // maintainAspectRatio: true
-    }
-    });
-  }else if(chartChoice == "pie"){
-    var chart = new Chart(ctx, {
-      type: 'pie',
-      data: {
-        labels: currencyNames, //this needs to be the names of the currency
-        datasets: [{
-          label: "User Pie Chart",
-          backgroundColor: [
-            'rgb(0, 0, 255)',
-					  'rgb(255, 0, 0)',
-					  'rgb(0, 255, 0)',
-          ],
-          borderColor: 'rgb(0, 0, 0)',
-          data: [compData1.Purchased_Amount, compData2.Purchased_Amount, compData3.Purchased_Amount], // current value of each currency
-        }]
-      },
+  options: {
+    responsive: false,
+    // maintainAspectRatio: true
+  }
+  });
+}
 
-    options: {
-      responsive: false,
-      // maintainAspectRatio: true
-    }
-    });
-  }else if(chartChoice == "line"){
-    var chart = new Chart(ctx, {
+function displayLineChart(compData1, compData2, compData3) {
+  // var jQueryScript = document.createElement('script');
+  // jQueryScript.setAttribute('src','https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js');
+  // document.head.appendChild(jQueryScript);
+  //parse the JSON data
+  //parseData1 = JSON.parse(compData1);
+  //parseData2 = JSON.parse(compData2);
+  //parseData3 = JSON.parse(compData3);
+  console.log(compData1);
+  var currencyNames = [compData1.Company_Name, compData2.Company_Name, compData3.Company_Name];
+
+  //get and clear the canvas
+  var c = document.getElementById("displayChart");
+  var ctx = c.getContext("2d");
+  ctx.clearRect(0, 0, 600, 400);
+  //read list
+  //give it to the chart
+  var chart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: [], //these need to be filled in, pulled in from each day or something since purchase
+      labels: currencyNames, //this needs to be the names of the currency
       datasets: [{
         label: currencyNames[0], //this should be the name of the first company
         backgroundColor: 'rgb(0, 0, 255)',
         borderColor: 'rgb(0, 0, 0)',
-        data: [] // currency value at each label
+        data: [compData1.Purchased_Amount] // currency value at each label
       },
       {
         label: currencyNames[1], //this should be the name of the second company
         backgroundColor: 'rgb(0, 255, 0)',
         borderColor: 'rgb(0, 0, 0)',
-        data: [] // currency value at each label
+        data: [compData2.Purchased_Amount] // currency value at each label
       },
       {
         label: currencyNames[2], //this should be the name of the third company
         backgroundColor: 'rgb(255, 0, 0)',
         borderColor: 'rgb(0, 0, 0)',
-        data: [] // currency value at each label
+        data: [compData3.Purchased_Amount] // currency value at each label
       }]
     },
 
-    options: {
-      responsive: false,
-      // maintainAspectRatio: true
-    }
-    });
+  options: {
+    responsive: false,
+    // maintainAspectRatio: true
   }
+  });
 }
 
 function requestJSONData(){
@@ -164,6 +220,12 @@ function requestJSONData(){
 
 function requestCoinListData() {
   connection.invoke("getCoinList", connection.connectionId);
+}
+function requestCoinListData1() {
+  connection.invoke("getCoinList1", connection.connectionId);
+}
+function requestCoinListData2() {
+  connection.invoke("getCoinList2", connection.connectionId);
 }
 
 //used when the update button is clicked, should get the share values and pass them to csharp for updating
