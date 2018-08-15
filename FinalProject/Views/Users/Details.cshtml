@@ -100,9 +100,9 @@
 @section scripts{
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
-        var chartData = @Model.StockPurchaseEntry;
+        var chartData = '@Model.StockPurchaseEntry';
         console.log("chart data: ");
-        //console.log(chartData);
+        console.log(chartData);
 
         google.charts.load('current', { 'packages': ['corechart'] });
         google.charts.setOnLoadCallback(drawChart);
