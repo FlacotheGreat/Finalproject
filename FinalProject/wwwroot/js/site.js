@@ -57,11 +57,15 @@ window.onload = function () {
 
 //this needs to accept preferably a list of names and quantity
 function displayChart(compData1, compData2, compData3, chartChoice) {
+  // var jQueryScript = document.createElement('script');
+  // jQueryScript.setAttribute('src','https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js');
+  // document.head.appendChild(jQueryScript);
   //parse the JSON data
-  parseData1 = JSON.parse(compData1);
-  parseData2 = JSON.parse(compData2);
-  parseData3 = JSON.parse(compData3);
-  var currencyNames = [parseData1.data.Company_Name, parseData2.data.Company_Name, parseData3.data.Company_Name];
+  //parseData1 = JSON.parse(compData1);
+  //parseData2 = JSON.parse(compData2);
+  //parseData3 = JSON.parse(compData3);
+  console.log(compData1);
+  var currencyNames = [compData1.Company_Name, compData2.Company_Name, compData3.Company_Name];
 
   //get and clear the canvas
   var c = document.getElementById("displayChart");
@@ -69,7 +73,7 @@ function displayChart(compData1, compData2, compData3, chartChoice) {
   // ctx.clearRect(0, 0, 600, 600);
   //read list
   //give it to the chart
-  if(chartChoice = "bar"){
+  if(chartChoice == "bar"){
     var chart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -99,29 +103,29 @@ function displayChart(compData1, compData2, compData3, chartChoice) {
       // maintainAspectRatio: true
     }
     });
-  }else if(chartChoice = "pie"){
+  }else if(chartChoice == "pie"){
     var chart = new Chart(ctx, {
-    type: 'pie',
-    data: {
-      labels: currencyNames, //this needs to be the names of the currency
-      datasets: [{
-        label: "User Pie Chart",
-        backgroundColor: [
-          window.chartColors.red,
-					window.chartColors.blue,
-					window.chartColors.yellow,
-        ],
-        borderColor: 'rgb(0, 0, 0)',
-        data: [parseData1.data.quotes.USD.price, parseData2.data.quotes.USD.price, parseData3.data.quotes.USD.price] // current value of each currency
-      }]
-    },
+      type: 'pie',
+      data: {
+        labels: currencyNames, //this needs to be the names of the currency
+        datasets: [{
+          label: "User Pie Chart",
+          backgroundColor: [
+            'rgb(0, 0, 255)',
+					  'rgb(255, 0, 0)',
+					  'rgb(0, 255, 0)',
+          ],
+          borderColor: 'rgb(0, 0, 0)',
+          data: [compData1.Purchased_Amount, compData2.Purchased_Amount, compData3.Purchased_Amount], // current value of each currency
+        }]
+      },
 
     options: {
       responsive: false,
       // maintainAspectRatio: true
     }
     });
-  }else if(chartChoice = "line"){
+  }else if(chartChoice == "line"){
     var chart = new Chart(ctx, {
     type: 'line',
     data: {
