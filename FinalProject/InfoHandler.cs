@@ -14,11 +14,13 @@ namespace FinalProject
 {
     public class InfoHandler : WebSocketHandler
     {
+        private readonly FinalProjectContext _context;
+
         public InfoHandler(WebSocketConnectionManager webSocketConnectionManager) : base(webSocketConnectionManager)
         {
         }
 
-                private readonly FinalProjectContext _context;
+        
 
 
         //When new user connects a new socketID is created
@@ -176,24 +178,87 @@ namespace FinalProject
         }
 
         //called to send data after user has updated the chart
-        public async Task updateUserData(string socketId, string newShares1, string newShares2, string newShares3){
-
-            string share1 = JsonConvert.DeserializeObject(newShares1).ToString();
-            string share2 = JsonConvert.DeserializeObject(newShares1).ToString();
-            string share3 = JsonConvert.DeserializeObject(newShares1).ToString();
-
-            //List<StockPurchaseEntry> list = new List<StockPurchaseEntry>();
-            //foreach (StockPurchaseEntry entry in ApiDataCalls.itemsToPass)
-            //{
-            //    entry.Users = null;
-
-            //    entry.Amount_Paid;
-
-            //    list.Add(entry);
-            //}
+        public async Task updateUserData(string socketId, string newShares1, string newShares2, string newShares3, string symbol, string symbol2,string symbol3)
+        {
 
 
+            UsersController dbRead = new UsersController(context: _context);
+
+
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.Id == ApiDataCalls.curId);
+
+
+            StockPurchaseEntry UserEntry = new StockPurchaseEntry();
+
+            UserEntry.UsersId = ApiDataCalls.curId;
+
+            for (int i = 1; i <= 3; i++)
+            {
+                if (i == 1)
+                {
+                    UserEntry.UsersId = ApiDataCalls.curId;
+                    UserEntry.Company_Name = symbol;
+                    UserEntry.Purchased_Amount = Convert.ToInt32(newShares1);
+                    UserEntry.Amount_Paid = 0;
+
+                    _context.Add(UserEntry);
+                    await _context.SaveChangesAsync();
+                    // _context.SaveChanges();
+                }
+                else if (i == 2)
+                {
+
+                    UserEntry.UsersId = ApiDataCalls.curId;
+                    UserEntry.Company_Name = symbol;
+                    UserEntry.Purchased_Amount = Convert.ToInt32(newShares1);
+                    UserEntry.Amount_Paid = 0;
+
+                    _context.Add(UserEntry);
+                    //_context.SaveChanges();
+                    await _context.SaveChangesAsync();
+
+                }
+                else if (i == 3)
+                {
+
+                    UserEntry.UsersId = ApiDataCalls.curId;
+                    UserEntry.Company_Name = symbol;
+                    UserEntry.Purchased_Amount = Convert.ToInt32(newShares1);
+                    UserEntry.Amount_Paid = 0;
+
+                    _context.Add(UserEntry);
+                    //_context.SaveChanges();
+                    await _context.SaveChangesAsync();
+
+
+                }
+
+            }
+
+            List<StockPurchaseEntry> list = new List<StockPurchaseEntry>();
+            foreach (StockPurchaseEntry entry in ApiDataCalls.itemsToPass)
+            {
+                entry.Users = null;
+
+                list.Add(entry);
+            }
+
+            var rawData = JsonConvert.SerializeObject(list);
+
+            await InvokeClientMethodToAllAsync("ParseValueAndCreateTable", socketId, rawData);
         }
+
+        //private decimal intitialBalance(int userID)
+        //{
+        //    UsersController dbRead = new UsersController(_context);
+
+        //    var users = _context.Users.First(x => x.Id == userID).Amount;
+
+        //    decimal balance = decimal.Round(users / 3, 2);
+
+        //    return balance;
+
+        //}
 
     }
 }

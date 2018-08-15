@@ -235,10 +235,14 @@ function updateUserDataFromChart() {
   var newShares1 = document.getElementById("CompCurrShares1").value;
   var newShares2 = document.getElementById("CompCurrShares2").value;
   var newShares3 = document.getElementById("CompCurrShares3").value;
+
+  var symbol1 = document.getElementById("CompSymbol1").value; 
+  var symbol2 = document.getElementById("CompSymbol2").value; 
+  var symbol3 = document.getElementById("CompSymbol3").value; 
   //either do the math here
 
-  //or just pass it to the server
-    connection.invoke("updateUserData", connection.connectionId, newShares1, newShares2, newShares3);
+    //or just pass it to the server
+    connection.invoke("updateUserData", connection.connectionId, newShares1, newShares2, newShares3, symbol1, symbol2, symbol3);
 
     console.log(newShares1 + " " + newShares2 + " " + newShares3);
 }
