@@ -52,6 +52,7 @@ namespace FinalProject.Controllers
             }
             ApiDataCalls.curUser = users.Username;
             ApiDataCalls.curId = users.Id;
+            ApiDataCalls.itemsToPass = users.StockPurchaseEntry;
 
 
             return View(users);

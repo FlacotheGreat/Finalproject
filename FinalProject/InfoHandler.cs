@@ -5,6 +5,10 @@ using System.Net.WebSockets;
 using System.Threading.Tasks;
 using WebSocketManager;
 using WebSocketManager.Common;
+using Microsoft.EntityFrameworkCore;
+using FinalProject.Models;
+using FinalProject.Controllers;
+
 
 namespace FinalProject
 {
@@ -13,6 +17,8 @@ namespace FinalProject
         public InfoHandler(WebSocketConnectionManager webSocketConnectionManager) : base(webSocketConnectionManager)
         {
         }
+
+                private readonly FinalProjectContext _context;
 
 
         //When new user connects a new socketID is created 
@@ -29,6 +35,7 @@ namespace FinalProject
                 Data = $"User: {socketID} is Connected"
 
             };
+
 
             await SendMessageToAllAsync(message);
             Console.WriteLine(message.Data);
@@ -54,7 +61,12 @@ namespace FinalProject
 
         public async Task getCoinList(string socketId)
         {
-            Console.WriteLine(ApiDataCalls.curUser + " " + ApiDataCalls.curId);
+
+            var rawData = JsonConvert.SerializeObject(ApiDataCalls.itemsToPass).ToString();
+
+            string Data = JsonConvert.DeserializeObject(rawData).ToString();
+
+            Console.WriteLine(Data);
 
             var uri = "https://min-api.cryptocompare.com/data/all/coinlist";
             await getData(socketId, uri, "ReceiveCoinListJson");
