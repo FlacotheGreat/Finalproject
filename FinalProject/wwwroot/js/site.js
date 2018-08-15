@@ -1,3 +1,56 @@
+﻿var connection;
+
+window.onload = function () {
+
+    connection = new WebSocketManager.Connection("ws://localhost:5000/server");
+   
+
+    connection.connectionMethods.onConnected = () => {
+       
+        //("Name of Method to invoke on server",SocketID,Content to pass)
+        connection.invoke("ConnectedUser", connection.connectionId);
+
+    }
+
+    connection.connectionMethods.onDisconnected = () => {
+
+        connection.invoke("DisconnectedUser", connection.connectionId, "");
+
+    }
+
+    connection.clientMethods["ParseAndReturnJson"] = (socketId, jsonStr) => {
+        console.log("incoming JSON data: \n");
+        console.log("jsonStr");
+        //parse the JSON object
+        parseData = JSON.parse(jsonStr);
+        //get whatever we want out of JSON
+        var compName = parseData.data.companyName;
+        //send it back to the server
+        connection.invoke("parsedDataFromJS", connection.connectionId, compName); //add whatever variables we want
+    }
+
+    connection.clientMethods["ParseValueAndCreateTable"] = (socketId, jsonData) => {
+        console.log("incoming json data: \n");
+        console.log(jsonData);
+        JSON.stringify(jsonData);
+        parseData = JSON.parse(jsonData);
+        console.log("\n transformed json data: \n");
+        console.log(parseData)
+        createStockTblFromJson();
+    }
+
+    connection.clientMethods["ReceiveJSONChartData"] = (socketId, jsonComp1, jsonComp2, jsonComp3) => {
+        displayChart(jsonComp1, jsonComp2, jsonComp3);
+    }
+
+    connection.start()
+
+    $(window).unload(function () {
+        connection.invoke("DisconnectedUser", connection.connectionId, "");
+    });
+}
+
+
 //what's needed
 //getting data out to give to js charts
 
@@ -147,71 +200,7 @@ function createStockTblFromJson(jsonDataComp1, jsonDataComp2, jsonDataComp3){
   document.getElementById("CompName3").innerHTML = parseData3.data.name;
 }
 
-﻿var connection;
-var user;
-var users = [];
 
-window.onload = function () {
-
-    connection = new WebSocketManager.Connection("ws://localhost:5000/server");
-
-    user = new user();
-
-    connection.connectionMethods.onConnected = () => {
-        user.id = connection.connectionId;
-        //("Name of Method to invoke on server",SocketID,Content to pass)
-        connection.invoke("ConnectedUser", connection.connectionId, JSON.stringify(user));
-
-    }
-
-    connection.connectionMethods.onDisconnected = () => {
-
-        connection.invoke("DisconnectedUser", connection.connectionId, "");
-
-    }
-
-    connection.clientMethods["pingUsers"] = (serUsers) => {
-        users = JSON.parse(serUser);
-        console.log(users);
-    };
-
-    connection.clientMethods["ParseAndReturnJson"] = (socketId, jsonStr) => {
-      console.log("incoming JSON data: \n");
-      console.log("jsonStr");
-      //parse the JSON object
-      parseData = JSON.parse(jsonStr);
-      //get whatever we want out of JSON
-      var compName = parseData.data.companyName;
-      //send it back to the server
-      connection.invoke("parsedDataFromJS", connection.connectionId, compName); //add whatever variables we want
-    }
-
-    connection.clientMethods["ParseValueAndCreateTable"] = (socketId, jsonData) => {
-      console.log("incoming json data: \n");
-      console.log(jsonData);
-      JSON.stringify(jsonData);
-      parseData = JSON.parse(jsonData);
-      console.log("\n transformed json data: \n");
-      console.log(parseData)
-      createStockTblFromJson();
-    }
-
-    connection.clientMethods["ReceiveJSONChartData"] = (socketId, jsonComp1, jsonComp2, jsonComp3) => {
-      displayChart(jsonComp1, jsonComp2, jsonComp3);
-    }
-
-    connection.start()
-
-    $(window).unload(function () {
-        connection.invoke("DisconnectedUser", connection.connectionId, "");
-    });
-}
-
-
-function user() {
-    this.id = "";
-    this.color = "";
-}
 
 function simpleHash() {
     s = document.getElementById("Pword").value;

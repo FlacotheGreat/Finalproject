@@ -20,6 +20,8 @@ namespace FinalProject
         }
 
         public IConfiguration Configuration { get; }
+        public static IServiceProvider ServiceProvider { get; set; }
+
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -35,7 +37,7 @@ namespace FinalProject
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -46,6 +48,9 @@ namespace FinalProject
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseWebSockets();
+            app.MapWebSocketManager("/server", serviceProvider.GetService<InfoHandler>());
 
             app.UseStaticFiles();
 

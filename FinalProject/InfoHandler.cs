@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Net;
+using System.Net.WebSockets;
 using System.Threading.Tasks;
 using WebSocketManager;
+using WebSocketManager.Common;
 
 namespace FinalProject
 {
@@ -11,47 +14,52 @@ namespace FinalProject
         {
         }
 
-        // Coin API: https://min-api.cryptocompare.com/
-        // Get list of currencies
-        //{
-        //    "Response": "Success",
-        //    "Message": "Coin list succesfully returned!",
-        //    "Data": {
-        //        "42": {
-        //            "Id": "4321",
-        //            "Url": "/coins/42/overview",
-        //            "ImageUrl": "/media/12318415/42.png",
-        //            "Name": "42",
-        //            "Symbol": "42",
-        //            "CoinName": "42 Coin",
-        //            "FullName": "42 Coin (42)",
-        //            "Algorithm": "Scrypt",
-        //            "ProofType": "PoW/PoS",
-        //            "FullyPremined": "0",
-        //            "TotalCoinSupply": "42",
-        //            "BuiltOn": "N/A",
-        //            "SmartContractAddress": "N/A",
-        //            "PreMinedValue": "N/A",
-        //            "TotalCoinsFreeFloat": "N/A",
-        //            "SortOrder": "34",
-        //            "Sponsored": false,
-        //            "IsTrading": true
-        //        }
-        //    }
-        //}
+
+        //When new user connects a new socketID is created 
+        public override async Task OnConnected(WebSocket socket)
+        {
+            await base.OnConnected(socket);
+
+            //this will be used to identify the user and their color
+            var socketID = WebSocketConnectionManager.GetId(socket);
+
+            var message = new Message
+            {
+                MessageType = MessageType.Text,
+                Data = $"User: {socketID} is Connected"
+
+            };
+
+            await SendMessageToAllAsync(message);
+            Console.WriteLine(message.Data);
+        }
+
+        //Disconnects the user with the socketID passed in
+        public override async Task OnDisconnected(WebSocket socket)
+        {
+            await base.OnConnected(socket);
+
+            var socketID = WebSocketConnectionManager.GetId(socket);
+
+            var message = new Message
+            {
+                MessageType = MessageType.Text,
+                Data = $"User: {socketID} is now disconnected"
+            };
+
+            await SendMessageToAllAsync(message);
+            Console.WriteLine(message.Data);
+        }
+
+
         public async Task getCoinList(string socketId)
         {
+            Console.WriteLine(ApiDataCalls.curUser + " " + ApiDataCalls.curId);
+
             var uri = "https://min-api.cryptocompare.com/data/all/coinlist";
             await getData(socketId, uri, "ReceiveCoinListJson");
         }
 
-        // Price of specific currencies
-        // https://min-api.cryptocompare.com/data/pricemulti?fsyms=42&tsyms=USD
-        // {
-        //    "42": {
-        //        "USD": 17414.93
-        //    }
-        //}
 
         //Create String array of User coins to pass into GetPrices
         public async Task getPrices(string socketId, string[] coins)
@@ -71,14 +79,6 @@ namespace FinalProject
             //InvokeClientMethodToAllAsync("Method Name", socketId, JSONraw);
             await InvokeClientMethodToAllAsync("ParseValueAndCreateTable", socketId, JSONraw);
         }
-
-        // Historical price for a coin
-        // https://min-api.cryptocompare.com/data/pricehistorical?fsym=42&tsyms=USD&ts=1533619818
-        // {
-        //    "42": {
-        //        "USD": 17531.56
-        //    }
-        //}
 
 
         public async void getHistoricalPrices(string socketId, string coin, DateTime dateTime)

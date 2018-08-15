@@ -50,6 +50,9 @@ namespace FinalProject.Controllers
             {
                 return Content("Invalid password");
             }
+            ApiDataCalls.curUser = users.Username;
+            ApiDataCalls.curId = users.Id;
+
 
             return View(users);
         }

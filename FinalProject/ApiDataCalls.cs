@@ -14,6 +14,9 @@ namespace FinalProject
 
         public static WebClient client = new WebClient();
 
+        public static string curUser;
+        public static int curId;
+
         // Coin API: https://min-api.cryptocompare.com/
         // Get list of currencies
         //{
