@@ -21,7 +21,7 @@ namespace FinalProject
                 private readonly FinalProjectContext _context;
 
 
-        //When new user connects a new socketID is created 
+        //When new user connects a new socketID is created
         public override async Task OnConnected(WebSocket socket)
         {
             await base.OnConnected(socket);
@@ -72,9 +72,10 @@ namespace FinalProject
 
             var rawData = JsonConvert.SerializeObject(list);
 
-            var uri = "https://min-api.cryptocompare.com/data/all/coinlist";
-            await getData(socketId, uri, "ReceiveCoinListJson");
-        }
+            // var uri = "https://min-api.cryptocompare.com/data/all/coinlist";
+            // await getData(socketId, uri, "ReceiveCoinListJson");
+            //await InvokeClientMethodAsync(socketId, "ParseJSONForChart", rawData);
+            await InvokeClientMethodToAllAsync("ParseValueAndCreateTable", socketId, rawData);        }
 
 
         //Create String array of User coins to pass into GetPrices
@@ -93,7 +94,7 @@ namespace FinalProject
 
             //Sends back the JSON string
             //InvokeClientMethodToAllAsync("Method Name", socketId, JSONraw);
-            await InvokeClientMethodToAllAsync("ParseValueAndCreateTable", socketId, JSONraw);
+
         }
 
 

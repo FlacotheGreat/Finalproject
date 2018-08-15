@@ -3,10 +3,10 @@
 window.onload = function () {
 
     connection = new WebSocketManager.Connection("ws://localhost:5000/server");
-   
+
 
     connection.connectionMethods.onConnected = () => {
-       
+
         //("Name of Method to invoke on server",SocketID,Content to pass)
         connection.invoke("ConnectedUser", connection.connectionId);
 
@@ -18,7 +18,7 @@ window.onload = function () {
 
     }
 
-    connection.clientMethods["ParseAndReturnJson"] = (socketId, jsonStr) => {
+    connection.clientMethods["ParseJSONForChart"] = (socketId, jsonStr) => {
         console.log("incoming JSON data: \n");
         console.log("jsonStr");
         //parse the JSON object
@@ -35,8 +35,9 @@ window.onload = function () {
         JSON.stringify(jsonData);
         parseData = JSON.parse(jsonData);
         console.log("\n transformed json data: \n");
-        console.log(parseData)
-        createStockTblFromJson();
+        console.log(parseData);
+        displayChart(parseData[0], parseData[1], parseData[2], "pie");
+        // createStockTblFromJson();
     }
 
     connection.clientMethods["ReceiveJSONChartData"] = (socketId, jsonComp1, jsonComp2, jsonComp3) => {
@@ -60,7 +61,7 @@ function displayChart(compData1, compData2, compData3, chartChoice) {
   parseData1 = JSON.parse(compData1);
   parseData2 = JSON.parse(compData2);
   parseData3 = JSON.parse(compData3);
-  var currencyNames = [parseData1.data.name, parseData2.data.name, parseData3.data.name];
+  var currencyNames = [parseData1.data.Company_Name, parseData2.data.Company_Name, parseData3.data.Company_Name];
 
   //get and clear the canvas
   var c = document.getElementById("displayChart");

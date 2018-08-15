@@ -58,7 +58,7 @@
                 string Purchased_Amount = item.Purchased_Amount.ToString();
                 string Amount_Paid = item.Amount_Paid.ToString();
                 string Created_At = item.Created_At.ToString();
-                
+
                 var uri = $"https://min-api.cryptocompare.com/data/price?fsym={Id}&tsyms=USD";
 
                 WebClient client = new WebClient();
@@ -80,6 +80,7 @@
         </table>
         <input align="center" type="button" id="updateBtn" onclick="updateUserDataFromChart()" value="UPDATE" />
         <h1 align="center"> Your Chart </h1>
+        <canvas id="displayChart" width="600" height="400"></canvas>
         <div id="pieChart"></div>
         <p></p>
         <div align="center">
@@ -94,34 +95,3 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script type="text/javascript" src="~/js/site.js"></script>
-
-@section scripts{
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script>
-        var chartData = '@Model.StockPurchaseEntry';
-        console.log("chart data: ");
-        console.log(chartData);
-
-        google.charts.load('current', { 'packages': ['corechart'] });
-        google.charts.setOnLoadCallback(drawChart);
-
-        function drawChart() {
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Currency');
-            data.addColumn('number', 'NumShares');
-            data.addRows([
-              [chartData.Company_Name.ToString(), chartData.Purchased_Amount.ToString()]
-            ]);
-
-            // Simple Pie Chart:
-            var option = {
-                title: 'Currency Pie Chart',
-                width: 500,
-                height: 400
-            };
-
-            var chart = new google.visualization.PieChart(document.getElementById('pieChart'));
-            chart.draw(data, option);
-        }
-    </script>
-}
